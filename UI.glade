@@ -195,6 +195,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <signal name="pressed" handler="press_out_bt" swapped="no"/>
           </object>
           <packing>
             <property name="x">185</property>

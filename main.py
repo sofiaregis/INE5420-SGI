@@ -20,6 +20,10 @@ class WindowMain():
     def on_window_main_destroy(self, widget, data=None):
         print("on_window_main_destory")
         Gtk.main_quit()
+
+    def press_out_bt(self, widget, data=None):
+        print("Test button clicked")
+        Gtk.main_quit()
     
     def main(self):
         Gtk.main()
