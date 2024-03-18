@@ -5,8 +5,15 @@ class Point(GraphicalObject):
         self.x = x
         self.y = y
 
-    def draw():
-        pass
+    def draw(self, viewport, window, cairo):
+        viewport_point = viewport.viewport_transformation(self, window)
+        print("Point:" + str(viewport_point.x) + " " + str(viewport_point.y))
+        cairo.save()
+        cairo.set_source_rgb(0, 0, 0)
+        cairo.move_to(viewport_point.x, viewport_point.y)
+        cairo.line_to(viewport_point.x+0.25, viewport_point.y+0.25)
+        cairo.stroke()
+        cairo.restore()
 
     def remove():
         pass
