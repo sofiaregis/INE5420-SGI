@@ -11,7 +11,7 @@ class Point(GraphicalObject):
         cairo.save()
         cairo.set_source_rgb(0, 0, 0)
         cairo.move_to(viewport_point.x, viewport_point.y)
-        cairo.line_to(viewport_point.x+0.25, viewport_point.y+0.25)
+        cairo.line_to(viewport_point.x+0.5, viewport_point.y+0.5)
         cairo.stroke()
         cairo.restore()
 
