@@ -2,6 +2,7 @@ from world import World
 from viewport import Viewport
 from point import Point
 from line import Line
+from wireframe import Wireframe
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -10,7 +11,8 @@ from gi.repository import GObject, Gtk, GdkPixbuf, cairo
 world = World()
 viewport = Viewport()
 #world.add_object(Point(200, 200))
-world.add_object(Line(200,200,500,500))
+#world.add_object(Line(200,200,200,400))
+world.add_object(Wireframe([Point(200, 200), Point(200, 400), Point(400, 400), Point(400, 200)]))
 #world.add_object(Line(300,300,100,100))
 class WindowMain():
 
