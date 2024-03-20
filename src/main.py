@@ -31,6 +31,10 @@ class WindowMain():
     def draw_background(self):
         pass
 
+    #def open_create_object(self, a):
+    #    self.windowMain=self.builder.get_object("CreateObjectWindow")
+    #    self.windowMain.show_all()
+
     def on_window_main_destroy(self, widget, data=None):
         print("on_window_main_destroy")
         Gtk.main_quit()
