@@ -22,7 +22,10 @@ class WindowMain():
         self.viewport_drawing_area = self.builder.get_object("ViewportDrawingArea")
         # Display main window
         self.windowMain=self.builder.get_object("MainWindow")
+        self.windowMain.connect("destroy", Gtk.main_quit)
         self.windowMain.show_all()
+        # Set add object window
+        self.create_object_window = self.builder.get_object("CreateObjectWindow")
 
     def post_init(self):
         self.cairo = self.viewport_drawing_area.get_window().cairo_create()
@@ -32,16 +35,8 @@ class WindowMain():
         pass
 
     def open_create_object(self, a):
-        self.windowMain=self.builder.get_object("CreateObjectWindow")
-        print("trying")
-        self.windowMain.show_all()
-
-    def cancel_create_object(self, widget, data=None):
-        Gtk.main_quit()
-
-    def on_window_main_destroy(self, widget, data=None):
-        print("on_window_main_destroy")
-        Gtk.main_quit()
+        self.create_object_window.show_all()
+        store = Gtk.ListStore(float, float)
     
     def on_draw(self, widget, cairo):
         print("On Draw Called")
@@ -64,7 +59,6 @@ class WindowMain():
 
     def press_out_bt(self, widget, data=None):
         print("Test button clicked")
-        #Gtk.main_quit()
         self.viewport_drawing_area.draw(self.cairo)
 
     def main(self):

@@ -508,19 +508,107 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBoxText">
+              <object class="GtkFixed">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="has-entry">True</property>
-                <items>
-                  <item translatable="yes">Enter points in ¨X, Y¨ format.</item>
-                  <item translatable="yes">test</item>
-                </items>
-                <child internal-child="entry">
-                  <object class="GtkEntry">
+                <child>
+                  <object class="GtkLabel">
+                    <property name="width-request">7</property>
+                    <property name="height-request">19</property>
+                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="text" translatable="yes">Enter points in ¨X, Y¨ format.</property>
+                    <property name="label" translatable="yes">x</property>
+                    <attributes>
+                      <attribute name="style" value="normal"/>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
                   </object>
+                  <packing>
+                    <property name="x">30</property>
+                    <property name="y">18</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">y</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="x">30</property>
+                    <property name="y">58</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry">
+                    <property name="width-request">108</property>
+                    <property name="height-request">34</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="width-chars">10</property>
+                    <property name="max-width-chars">15</property>
+                    <property name="overwrite-mode">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">60</property>
+                    <property name="y">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry">
+                    <property name="width-request">108</property>
+                    <property name="height-request">34</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="width-chars">10</property>
+                    <property name="max-width-chars">15</property>
+                  </object>
+                  <packing>
+                    <property name="x">61</property>
+                    <property name="y">53</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton">
+                    <property name="label">gtk-add</property>
+                    <property name="width-request">76</property>
+                    <property name="height-request">29</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="double-buffered">False</property>
+                    <property name="use-stock">True</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">72</property>
+                    <property name="y">95</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="width-request">180</property>
+                    <property name="height-request">119</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="shadow-type">in</property>
+                    <child>
+                      <object class="GtkTreeView">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <child internal-child="selection">
+                          <object class="GtkTreeSelection"/>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="x">225</property>
+                    <property name="y">8</property>
+                  </packing>
                 </child>
               </object>
               <packing>
