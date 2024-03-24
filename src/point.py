@@ -7,7 +7,7 @@ class Point(GraphicalObject):
 
     def draw(self, viewport, window, cairo):
         viewport_point = viewport.viewport_transformation(self, window)
-        print("Point:" + str(viewport_point.x) + " " + str(viewport_point.y))
+        #print("Point:" + str(viewport_point.x) + " " + str(viewport_point.y))
         cairo.save()
         cairo.set_source_rgb(0, 0, 0)
         cairo.move_to(viewport_point.x, viewport_point.y)
