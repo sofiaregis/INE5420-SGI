@@ -22,6 +22,7 @@ class WindowMain():
         self.builder.add_from_file("../ui/UI.glade")
         self.builder.connect_signals(self)
         self.viewport_drawing_area = self.builder.get_object("ViewportDrawingArea")
+        self.step_entry = self.builder.get_object("StepEntry")
         # Display main window
         self.windowMain = self.builder.get_object("MainWindow")
         self.windowMain.connect("destroy", Gtk.main_quit)
@@ -91,9 +92,37 @@ class WindowMain():
     def button_create_point(x,y):
         world.add_object(Point(x,y))
 
-    def press_out_bt(self, widget, data=None):
-        #print("Test button clicked")
-        self.viewport_drawing_area.draw(self.cairo)
+    def press_up_button(self, widget, data=None):
+        step = int(self.step_entry.get_text())
+        world.window.move_up(step)
+        self.viewport_drawing_area.queue_draw()
+    
+    def press_down_button(self, widget, data=None):
+        step = int(self.step_entry.get_text())
+        world.window.move_down(step)
+        self.viewport_drawing_area.queue_draw()
+
+    def press_left_button(self, widget, data=None):
+        step = int(self.step_entry.get_text())
+        world.window.move_left(step)
+        self.viewport_drawing_area.queue_draw()
+    
+    def press_right_button(self, widget, data=None):
+        step = int(self.step_entry.get_text())
+        world.window.move_right(step)
+        self.viewport_drawing_area.queue_draw()
+
+    def press_in_button(self, widget, data=None):
+        percentage = int(self.step_entry.get_text())
+        world.window.zoom_in(percentage)
+        self.viewport_drawing_area.queue_draw()
+    
+    def press_out_button(self, widget, data=None):
+        percentage = int(self.step_entry.get_text())
+        world.window.zoom_out(percentage)
+        self.viewport_drawing_area.queue_draw()
+
+
 
     def main(self):
         Gtk.main()
