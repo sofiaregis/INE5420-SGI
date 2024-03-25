@@ -439,7 +439,9 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <child internal-child="selection">
-                  <object class="GtkTreeSelection" id="ObjectTreeSelection"/>
+                  <object class="GtkTreeSelection" id="ObjectTreeSelection">
+                    <signal name="changed" handler="select_object" swapped="no"/>
+                  </object>
                 </child>
               </object>
             </child>
@@ -637,9 +639,9 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="CreateObject">
             <property name="label" translatable="yes">Create Object</property>
-            <property name="width-request">230</property>
+            <property name="width-request">149</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
@@ -647,6 +649,22 @@
           </object>
           <packing>
             <property name="x">20</property>
+            <property name="y">183</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="DeleteObject">
+            <property name="label">gtk-delete</property>
+            <property name="width-request">76</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="use-stock">True</property>
+            <signal name="clicked" handler="delete_selected_object" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">174</property>
             <property name="y">183</property>
           </packing>
         </child>
