@@ -26,6 +26,8 @@ class WindowMain():
         self.builder.connect_signals(self)
         self.viewport_drawing_area = self.builder.get_object("ViewportDrawingArea")
         self.step_entry = self.builder.get_object("StepEntry")
+        self.object_description = self.builder.get_object("LogTextView")
+
     
         # Display main window
         self.windowMain = self.builder.get_object("MainWindow")
@@ -121,13 +123,14 @@ class WindowMain():
 
     #END ---------------------------------- Create Object Popup
 
-    def select_object(self, widget):   
+    def select_object(self, widget):
         model, iters = self.objects_treeview.get_selection().get_selected()
         if iters is not None:
             index = int(str(model.get_path(iters)))
             if self.selected_object_index is not None:
                 world.display_file[self.selected_object_index].color = (0, 0, 0)
             self.selected_object_index = index
+            self.update_log(index)
             world.display_file[self.selected_object_index].color = (1, 0, 0)
         self.viewport_drawing_area.queue_draw()
 
@@ -135,8 +138,28 @@ class WindowMain():
         if self.selected_object_index is not None:
             world.display_file.pop(self.selected_object_index)
             self.selected_object_index = None
+            self.update_log(None)
             self.on_draw(self.viewport_drawing_area, self.cairo)
             self.create_treeview_items()
+
+    def update_log(self, index):
+        if index is not None:
+            chosen_object = world.display_file[index]
+            if isinstance(chosen_object, Point):
+                locations = [(chosen_object.x, chosen_object.y)]
+            elif isinstance(chosen_object, Line):
+                locations = [(chosen_object.start.x, chosen_object.start.y), (chosen_object.end.x, chosen_object.end.y)]
+            else:
+                locations = []
+                for point in chosen_object.points:
+                    locations.append((point.x, point.y))
+
+            object_type = chosen_object.__class__.__name__
+
+            self.object_description.get_buffer().set_text(f"{object_type} \nPOINTS: {locations}")
+        else:
+            self.object_description.get_buffer().set_text("")
+
 
     def on_draw(self, widget, cairo):
         cairo.save()
