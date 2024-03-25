@@ -351,6 +351,7 @@
                         <property name="double-buffered">False</property>
                         <property name="use-stock">True</property>
                         <property name="always-show-image">True</property>
+                        <signal name="clicked" handler="add_point_wireframe" swapped="no"/>
                       </object>
                       <packing>
                         <property name="x">72</property>
@@ -495,6 +496,7 @@
             <property name="can-focus">True</property>
             <property name="width-chars">4</property>
             <property name="max-width-chars">4</property>
+            <property name="text" translatable="yes">50</property>
             <property name="input-purpose">digits</property>
           </object>
           <packing>
@@ -651,4 +653,5 @@
       </object>
     </child>
   </object>
+  <object class="GtkEntryBuffer" id="entrybuffer1"/>
 </interface>

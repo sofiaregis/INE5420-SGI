@@ -10,10 +10,7 @@ from gi.repository import GObject, Gtk, GdkPixbuf, cairo
 
 world = World()
 viewport = Viewport()
-#world.add_object(Point(200, 200))
-#world.add_object(Line(200,200,200,400))
-world.add_object(Wireframe([Point(200, 200), Point(200, 400), Point(400, 400), Point(400, 200)]))
-#world.add_object(Line(300,300,100,100))
+
 class WindowMain():
 
     def __init__(self):
@@ -27,8 +24,25 @@ class WindowMain():
         self.windowMain = self.builder.get_object("MainWindow")
         self.windowMain.connect("destroy", Gtk.main_quit)
         self.windowMain.show_all()
-        # Set create object window
+        # Set up the Treeview for objects
+        self.objects_liststore = Gtk.ListStore(int, str)
+        self.objects_treeview = self.builder.get_object("ObjectTreeView")
+        self.objects_treeview.set_model(self.objects_liststore)
+        for i, column_title in enumerate(["ID", "Object Type"]):
+            renderer = Gtk.CellRendererText()
+            column = Gtk.TreeViewColumn(column_title, renderer, text=i)
+            self.objects_treeview.append_column(column)
+
+        # Set create object window and Wireframe Treeview
         self.create_object_dialog = self.builder.get_object("CreateObjectDialog")
+        self.wireframe_points = []
+        self.wireframe_points_liststore = Gtk.ListStore(int, int)
+        self.wireframe_points_treeview = self.builder.get_object("WireframeTreelistPoints")
+        self.wireframe_points_treeview.set_model(self.wireframe_points_liststore)
+        for i, column_title in enumerate(["X", "Y"]):
+            renderer = Gtk.CellRendererText()
+            column = Gtk.TreeViewColumn(column_title, renderer, text=i)
+            self.wireframe_points_treeview.append_column(column)
 
     def post_init(self):
         self.cairo = self.viewport_drawing_area.get_window().cairo_create()
@@ -61,9 +75,25 @@ class WindowMain():
             world.display_file.append(Line(int(input["LineX1Input"]), int(input["LineY1Input"]), int(input["LineX2Input"]), int(input["LineY2Input"])))
 
         # Create new wireframe
-            
-
+        if self.wireframe_points != []:
+            new_wireframe_points = []
+            for point in self.wireframe_points:
+                new_wireframe_points.append(Point(point[0], point[1]))
+            world.display_file.append(Wireframe(new_wireframe_points))
+            self.wireframe_points_liststore.clear()
+            self.wireframe_points = []
         self.close_create_object(widget)
+
+    def add_point_wireframe(self, widget):
+        x_entry = self.builder.get_object("WireframeXInput")
+        y_entry = self.builder.get_object("WireframeYInput")
+        x = x_entry.get_text()
+        y = y_entry.get_text()
+        if x != "" and y != "":
+            self.wireframe_points.append((int(x), int(y)))
+            self.wireframe_points_liststore.append(self.wireframe_points[-1])
+            x_entry.set_text("")
+            y_entry.set_text("")
 
     def close_create_object(self, widget):
         self.create_object_dialog.hide()
@@ -85,9 +115,13 @@ class WindowMain():
         cairo.fill()
         cairo.restore()
         
+        i = 0
+        self.objects_liststore.clear()
         for object in world.display_file:
+            i += 1
             #print(object)
             object.draw(viewport, world.window, cairo)
+            self.objects_liststore.append([i, object.__class__.__name__])
     
     def button_create_point(x,y):
         world.add_object(Point(x,y))
@@ -121,7 +155,6 @@ class WindowMain():
         percentage = int(self.step_entry.get_text())
         world.window.zoom_out(percentage)
         self.viewport_drawing_area.queue_draw()
-
 
 
     def main(self):
