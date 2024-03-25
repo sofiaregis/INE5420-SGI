@@ -11,6 +11,12 @@ from gi.repository import GObject, Gtk, GdkPixbuf, cairo
 world = World()
 viewport = Viewport()
 
+world.add_object(Wireframe([Point(100,100),Point(200,100),Point(200,200),Point(100,200)]))
+world.add_object(Line(150,300,600,500))
+world.add_object(Point(600,300))
+world.add_object(Wireframe([Point(450,100),Point(350,350),Point(500,200)]))
+
+
 class WindowMain():
 
     def __init__(self):
@@ -50,9 +56,20 @@ class WindowMain():
     def post_init(self):
         self.cairo = self.viewport_drawing_area.get_window().cairo_create()
         self.viewport_drawing_area.draw(self.cairo)
+        self.create_treeview_items()
 
     #START  ----------------------------------  Create Object Popup:
 
+    def create_treeview_items(self):
+        self.objects_liststore.clear()
+        objects_dict = {"Point": 0, "Line": 0, "Wireframe": 0}
+
+        for i in range(len(world.display_file)):
+            object_class = world.display_file[i].__class__.__name__
+            objects_dict[object_class] += 1
+            self.objects_liststore.append([f"{object_class} {objects_dict[object_class]}"])
+
+    
     def open_create_object(self, widget):
         self.create_object_dialog.show_all()
 
@@ -83,6 +100,7 @@ class WindowMain():
             self.wireframe_points_liststore.clear()
             self.wireframe_points = []
         self.close_create_object(widget)
+        self.create_treeview_items()
 
     def add_point_wireframe(self, widget):
         x_entry = self.builder.get_object("WireframeXInput")
@@ -107,16 +125,20 @@ class WindowMain():
         model, iters = self.objects_treeview.get_selection().get_selected()
         if iters is not None:
             index = int(str(model.get_path(iters)))
+            if self.selected_object_index is not None:
+                world.display_file[self.selected_object_index].color = (0, 0, 0)
             self.selected_object_index = index
+            world.display_file[self.selected_object_index].color = (1, 0, 0)
+        self.viewport_drawing_area.queue_draw()
 
     def delete_selected_object(self, widget):
         if self.selected_object_index is not None:
             world.display_file.pop(self.selected_object_index)
             self.selected_object_index = None
             self.on_draw(self.viewport_drawing_area, self.cairo)
+            self.create_treeview_items()
 
     def on_draw(self, widget, cairo):
-        #print("On Draw Called")
         cairo.save()
         cairo.set_source_rgb(1, 1, 1)
         cairo.move_to(0, 0)
@@ -126,15 +148,9 @@ class WindowMain():
         cairo.line_to(0, 0)
         cairo.fill()
         cairo.restore()
-        
-        self.objects_liststore.clear()
-        objects_dict = {"Point": 0, "Line": 0, "Wireframe": 0}
 
         for i in range(len(world.display_file)):
             world.display_file[i].draw(viewport, world.window, cairo)
-            object_class = world.display_file[i].__class__.__name__
-            objects_dict[object_class] += 1
-            self.objects_liststore.append([f"{object_class} {objects_dict[object_class]}"])
     
     def button_create_point(x,y):
         world.add_object(Point(x,y))
