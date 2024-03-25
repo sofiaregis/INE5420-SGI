@@ -4,11 +4,12 @@ from point import Point
 class Wireframe(GraphicalObject):
     def __init__(self, points):
         self.points = points
+        self.color = (0, 0, 0)
 
     def draw(self, viewport, window, cairo):
         viewport_point_start = viewport.viewport_transformation(self.points[0], window)
         cairo.save()
-        cairo.set_source_rgb(0, 0, 0)
+        cairo.set_source_rgb(self.color[0], self.color[1], self.color[2])
         for i in range(len(self.points)):
             viewport_point_start = viewport.viewport_transformation(self.points[i], window)
             if not (i == len(self.points) - 1):
@@ -22,6 +23,3 @@ class Wireframe(GraphicalObject):
                 cairo.line_to(viewport_point_end.x, viewport_point_end.y)
                 cairo.stroke()
         cairo.restore()
-
-    def remove():
-        pass
