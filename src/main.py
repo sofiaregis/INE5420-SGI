@@ -139,7 +139,7 @@ class WindowMain():
             world.display_file.pop(self.selected_object_index)
             self.selected_object_index = None
             self.update_log(None)
-            self.on_draw(self.viewport_drawing_area, self.cairo)
+            self.viewport_drawing_area.queue_draw()
             self.create_treeview_items()
 
     def update_log(self, index):
