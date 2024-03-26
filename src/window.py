@@ -23,21 +23,13 @@ class Window:
         self.x_max -= step
 
     def zoom_in(self, percentage):
-        x_size = self.x_max - self.x_min
-        y_size = self.y_max - self.y_min
-        new_x_size = x_size * (percentage/100)
-        new_y_size = y_size * (percentage/100)
-        self.x_min += new_x_size/2
-        self.x_max -= new_x_size/2
-        self.y_min += new_y_size/2
-        self.y_max -= new_y_size/2
+        self.x_min /= percentage/100 + 1
+        self.x_max /= percentage/100 + 1
+        self.y_min /= percentage/100 + 1
+        self.y_max /= percentage/100 + 1
 
     def zoom_out(self, percentage):
-        x_size = self.x_max - self.x_min
-        y_size = self.y_max - self.y_min
-        new_x_size = x_size * (percentage/100)
-        new_y_size = y_size * (percentage/100)
-        self.x_min -= new_x_size/2
-        self.x_max += new_x_size/2
-        self.y_min -= new_y_size/2
-        self.y_max += new_y_size/2
+        self.x_min *= percentage/100 + 1
+        self.x_max *= percentage/100 + 1
+        self.y_min *= percentage/100 + 1
+        self.y_max *= percentage/100 + 1
