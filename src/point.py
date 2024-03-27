@@ -14,3 +14,6 @@ class Point(GraphicalObject):
         cairo.line_to(viewport_point.x+0.5, viewport_point.y+0.5)
         cairo.stroke()
         cairo.restore()
+
+    def center(self):
+        return self.x, self.y

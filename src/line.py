@@ -17,3 +17,7 @@ class Line(GraphicalObject):
         cairo.stroke()
         cairo.restore()
     
+    def center(self):
+        x_center = (self.start.x + self.end.x) / 2
+        y_center = (self.start.y + self.end.y) / 2
+        return (x_center, y_center)

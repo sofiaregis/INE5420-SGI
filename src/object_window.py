@@ -22,7 +22,7 @@ class ObjectWindow:
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
             self.wireframe_points_treeview.append_column(column)
-    
+
     def open(self, widget):
         self.create_object_dialog.show_all()
 

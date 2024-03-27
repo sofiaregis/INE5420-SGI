@@ -9,9 +9,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import GObject, Gtk, GdkPixbuf, cairo
 
 class WindowMain():
-
     def __init__(self, world, viewport):
-
         self.world = world
         self.viewport = viewport
 
@@ -122,7 +120,7 @@ class WindowMain():
         step = int(self.step_entry.get_text())
         self.world.window.move_up(step)
         self.viewport_drawing_area.queue_draw()
-    
+
     def press_down_button(self, widget, data=None):
         step = int(self.step_entry.get_text())
         self.world.window.move_down(step)
@@ -132,7 +130,7 @@ class WindowMain():
         step = int(self.step_entry.get_text())
         self.world.window.move_left(step)
         self.viewport_drawing_area.queue_draw()
-    
+
     def press_right_button(self, widget, data=None):
         step = int(self.step_entry.get_text())
         self.world.window.move_right(step)
@@ -142,12 +140,11 @@ class WindowMain():
         percentage = int(self.step_entry.get_text())
         self.world.window.zoom_in(percentage)
         self.viewport_drawing_area.queue_draw()
-    
+
     def press_out_button(self, widget, data=None):
         percentage = int(self.step_entry.get_text())
         self.world.window.zoom_out(percentage)
         self.viewport_drawing_area.queue_draw()
-
 
     def main(self):
         Gtk.main()

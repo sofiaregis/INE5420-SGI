@@ -8,3 +8,7 @@ class GraphicalObject(ABC):
     @abstractmethod
     def draw(self):
         pass
+
+    @abstractmethod
+    def center(self):
+        pass

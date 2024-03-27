@@ -23,3 +23,11 @@ class Wireframe(GraphicalObject):
                 cairo.line_to(viewport_point_end.x, viewport_point_end.y)
                 cairo.stroke()
         cairo.restore()
+
+    def center(self):
+        for point in self.points:
+            x_center += point.x
+            y_center += point.y
+        x_center /= len(self.points)
+        y_center /= len(self.points)
+        return (x_center, y_center)
