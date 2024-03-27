@@ -23,6 +23,7 @@ class WindowMain():
         self.step_entry = self.builder.get_object("StepEntry")
         self.object_description = self.builder.get_object("LogTextView")
     
+        #Create different windows
         self.object_window = ObjectWindow(self, self.builder)
 
         # Display main window
@@ -43,7 +44,7 @@ class WindowMain():
     def post_init(self):
         self.cairo = self.viewport_drawing_area.get_window().cairo_create()
         self.viewport_drawing_area.draw(self.cairo)
-        self.object_window.create_treeview_items()
+        self.create_treeview_items()
 
     def open_create_object(self, widget):
         self.object_window.open(widget)
@@ -74,7 +75,7 @@ class WindowMain():
             self.selected_object_index = None
             self.update_log(None)
             self.viewport_drawing_area.queue_draw()
-            self.object_window.create_treeview_items()
+            self.create_treeview_items()
 
     def update_log(self, index):
         if index is not None:
@@ -94,6 +95,14 @@ class WindowMain():
         else:
             self.object_description.get_buffer().set_text("")
 
+    def create_treeview_items(self):
+        self.objects_liststore.clear()
+        objects_dict = {"Point": 0, "Line": 0, "Wireframe": 0}
+
+        for i in range(len(self.world.display_file)):
+            object_class = self.world.display_file[i].__class__.__name__
+            objects_dict[object_class] += 1
+            self.objects_liststore.append([f"{object_class} {objects_dict[object_class]}"])
 
     def on_draw(self, widget, cairo):
         cairo.save()

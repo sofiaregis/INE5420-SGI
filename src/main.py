@@ -9,6 +9,7 @@ world = World()
 viewport = Viewport()
 main_window = WindowMain(world, viewport)
 
+#Starting objects in the World for easier visualization
 world.add_object(Wireframe([Point(100,100),Point(200,100),Point(200,200),Point(100,200)]))
 world.add_object(Line(150,300,600,500))
 world.add_object(Point(600,300))
