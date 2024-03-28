@@ -414,6 +414,18 @@
       </object>
     </child>
   </object>
+  <object class="GtkEntryBuffer" id="entrybuffer1"/>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="xalign">0.5</property>
+    <property name="pixbuf">zoom_in.png</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">zoom_out.png</property>
+  </object>
   <object class="GtkWindow" id="MainWindow">
     <property name="width-request">1150</property>
     <property name="height-request">900</property>
@@ -492,18 +504,17 @@
         </child>
         <child>
           <object class="GtkEntry" id="StepEntry">
-            <property name="width-request">80</property>
-            <property name="height-request">40</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="width-chars">4</property>
             <property name="max-width-chars">4</property>
             <property name="text" translatable="yes">50</property>
+            <property name="shadow-type">none</property>
             <property name="input-purpose">digits</property>
           </object>
           <packing>
-            <property name="x">60</property>
-            <property name="y">230</property>
+            <property name="x">80</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -513,23 +524,29 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">Step:</property>
+            <attributes>
+              <attribute name="font-desc" value="Source Code Pro Semi-Bold 10"/>
+              <attribute name="scale" value="1.2"/>
+            </attributes>
           </object>
           <packing>
-            <property name="x">20</property>
-            <property name="y">235</property>
+            <property name="x">28</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="StepPercentageLabel">
-            <property name="width-request">10</property>
-            <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">%</property>
+            <attributes>
+              <attribute name="font-desc" value="Source Code Pro Heavy 10"/>
+              <attribute name="scale" value="1.5"/>
+            </attributes>
           </object>
           <packing>
-            <property name="x">145</property>
-            <property name="y">235</property>
+            <property name="x">138</property>
+            <property name="y">262</property>
           </packing>
         </child>
         <child>
@@ -544,7 +561,7 @@
           </object>
           <packing>
             <property name="x">60</property>
-            <property name="y">280</property>
+            <property name="y">320</property>
           </packing>
         </child>
         <child>
@@ -559,7 +576,7 @@
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">315</property>
+            <property name="y">355</property>
           </packing>
         </child>
         <child>
@@ -574,7 +591,7 @@
           </object>
           <packing>
             <property name="x">100</property>
-            <property name="y">315</property>
+            <property name="y">355</property>
           </packing>
         </child>
         <child>
@@ -589,38 +606,39 @@
           </object>
           <packing>
             <property name="x">60</property>
-            <property name="y">350</property>
+            <property name="y">390</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="InButton">
-            <property name="label" translatable="yes">IN</property>
             <property name="name">d</property>
-            <property name="width-request">65</property>
-            <property name="height-request">35</property>
+            <property name="width-request">40</property>
+            <property name="height-request">40</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="image">image1</property>
+            <property name="always-show-image">True</property>
             <signal name="pressed" handler="press_in_button" swapped="no"/>
           </object>
           <packing>
-            <property name="x">185</property>
-            <property name="y">280</property>
+            <property name="x">200</property>
+            <property name="y">257</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="OutButton">
-            <property name="label" translatable="yes">OUT</property>
-            <property name="width-request">65</property>
-            <property name="height-request">35</property>
+            <property name="width-request">40</property>
+            <property name="height-request">40</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="image">image2</property>
             <signal name="pressed" handler="press_out_button" swapped="no"/>
           </object>
           <packing>
-            <property name="x">185</property>
-            <property name="y">350</property>
+            <property name="x">155</property>
+            <property name="y">257</property>
           </packing>
         </child>
         <child>
@@ -668,8 +686,24 @@
             <property name="y">183</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width-request">204</property>
+            <property name="height-request">26</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Window Navigation</property>
+            <attributes>
+              <attribute name="font-desc" value="Source Code Pro Semi-Bold 10"/>
+              <attribute name="scale" value="1.5"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">33</property>
+            <property name="y">226</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
-  <object class="GtkEntryBuffer" id="entrybuffer1"/>
 </interface>
