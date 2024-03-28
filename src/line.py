@@ -10,8 +10,6 @@ class Line(GraphicalObject):
     def draw(self, viewport, window, cairo):
         viewport_point_start = viewport.viewport_transformation(self.start, window)
         viewport_point_end = viewport.viewport_transformation(self.end, window)
-        #print("Point Start:" + str(viewport_point_start.x) + " " + str(viewport_point_start.y))
-        #print("Point End:" + str(viewport_point_end.x) + " " + str(viewport_point_end.y))
         cairo.save()
         cairo.set_source_rgb(self.color[0], self.color[1], self.color[2])
         cairo.move_to(viewport_point_start.x, viewport_point_start.y)
@@ -19,3 +17,7 @@ class Line(GraphicalObject):
         cairo.stroke()
         cairo.restore()
     
+    def center(self):
+        x_center = (self.start.x + self.end.x) / 2
+        y_center = (self.start.y + self.end.y) / 2
+        return (x_center, y_center)
