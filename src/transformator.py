@@ -46,7 +46,7 @@ class Transformator:
     #Transformations for objects
     def move_point(self, n_dimensions, point, vector):
         homogenous_matrix = self.create_homogenous_matrix(n_dimensions, point)
-        move_matrix = self.create_move_matrix(n_dimensions, vector)
+        move_matrix = self.create_translation_matrix(n_dimensions, vector)
         result = self.multiply_matrix(homogenous_matrix, move_matrix)
         point.x = result[0][0]
         point.y = result[1][1]
@@ -68,9 +68,9 @@ class Transformator:
         else:
             if n_dimensions == 2:
                 center_coord = object.center()
-                take_to_center_op = self.create_move_matrix(n_dimensions, -center_coord[0], -center_coord[1])
+                take_to_center_op = self.create_translation_matrix(n_dimensions, -center_coord[0], -center_coord[1])
                 scale_op = self.create_scale_matrix(n_dimensions, scale_vector)
-                take_back_op = self.create_move_matrix(n_dimensions, center_coord[0], center_coord[1])
+                take_back_op = self.create_translation_matrix(n_dimensions, center_coord[0], center_coord[1])
                 temp_op = self.multiply_matrix(take_to_center_op, scale_op)
                 op_matrix = self.multiply_matrix(temp_op, take_back_op)
                 if isinstance(object, Line):
@@ -95,9 +95,9 @@ class Transformator:
         else:
             if n_dimensions == 2:
                 center_coord = object.center()
-                take_to_center_op = self.create_move_matrix(n_dimensions, -center_coord[0], -center_coord[1])
+                take_to_center_op = self.create_translation_matrix(n_dimensions, -center_coord[0], -center_coord[1])
                 rotate_op = self.create_rotate_matrix(n_dimensions, angle)
-                take_back_op = self.create_move_matrix(n_dimensions, center_coord[0], center_coord[1])
+                take_back_op = self.create_translation_matrix(n_dimensions, center_coord[0], center_coord[1])
                 temp_op = self.multiply_matrix(take_to_center_op, rotate_op)
                 op_matrix = self.multiply_matrix(temp_op, take_back_op)
                 if isinstance(object, Line):
