@@ -16,7 +16,7 @@ class Transformator:
                       [   0,      0,     1]]
         return matrix
 
-    def create_move_matrix(self, n_dimensions, vector):
+    def create_translation_matrix(self, n_dimensions, vector):
         if n_dimensions == 2:
             translation_matrix = [[1,           0,     0],
                                   [0,           1,     0],
