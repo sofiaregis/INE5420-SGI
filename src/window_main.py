@@ -3,6 +3,7 @@ from point import Point
 from line import Line
 from wireframe import Wireframe
 from object_window import ObjectWindow
+from transformator import Transformator
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -12,6 +13,7 @@ class WindowMain():
     def __init__(self, world, viewport):
         self.world = world
         self.viewport = viewport
+        self.transformator = Transformator()
 
         # Get GUI Glade file
         self.builder = Gtk.Builder()
@@ -145,6 +147,46 @@ class WindowMain():
         percentage = int(self.step_entry.get_text())
         self.world.window.zoom_out(percentage)
         self.viewport_drawing_area.queue_draw()
+
+    #Object Manipulation
+    def confirm_move_object(self, widget, data=None):
+        x_entry = self.builder.get_object("XMoveInput")
+        y_entry = self.builder.get_object("YMoveInput")
+        x = x_entry.get_text()
+        y = y_entry.get_text()
+        if self.selected_object_index is not None:
+            selected_object = self.world.display_file[self.selected_object_index]
+            if x != "" and y != "" and selected_object is not None:
+                print(f"Moving object {selected_object} adding {x} to x and {y} to y")
+                self.transformator.move_object(2, selected_object, Point(int(x), int(y)))
+                x_entry.set_text("")
+                y_entry.set_text("")
+                self.viewport_drawing_area.queue_draw()
+
+    def confirm_resize_object(self, widget, data=None):
+        x_entry = self.builder.get_object("XResizeInput")
+        y_entry = self.builder.get_object("YResizeInput")
+        x = x_entry.get_text()
+        y = y_entry.get_text()
+        if self.selected_object_index is not None:
+            selected_object = self.world.display_file[self.selected_object_index]
+            if x != "" and y != "" and selected_object is not None:
+                print(f"Scaling object {selected_object} by {x} in x and {y} in y")
+                self.transformator.scale_object(2, selected_object, Point(x, y))
+                x_entry.set_text("")
+                y_entry.set_text("")
+                self.viewport_drawing_area.queue_draw()
+
+    def confirm_rotate_object(self, widget, data=None):
+        angle_entry = self.builder.get_object("AngleRotateInput")
+        angle = angle_entry.get_text()
+        if self.selected_object_index is not None:
+            selected_object = self.world.display_file[self.selected_object_index]
+            if angle != "" and selected_object is not None:
+                print(f"Rotating object {selected_object} by {angle} degrees")
+                self.transformator.rotate_object(2, selected_object, int(angle))
+                angle_entry.set_text("")
+                self.viewport_drawing_area.queue_draw()
 
     def main(self):
         Gtk.main()
