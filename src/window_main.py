@@ -199,7 +199,7 @@ class WindowMain():
                     y_entry = self.builder.get_object("YRotateInput")
                     x = x_entry.get_text()
                     y = y_entry.get_text()
-                    self.transformator.rotate_object_origin(2, selected_object, float(angle), Point(int(x), int(y)))
+                    self.transformator.rotate_object_point(2, selected_object, float(angle), Point(int(x), int(y)))
                     x_entry.set_text("")
                     y_entry.set_text("")
                 else:
