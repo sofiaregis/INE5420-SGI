@@ -180,48 +180,30 @@ class WindowMain():
     def confirm_rotate_object(self, widget, data=None):
         angle_entry = self.builder.get_object("AngleRotateInput")
         angle = angle_entry.get_text()
+        radio_center = self.builder.get_object("CenterRadio")
+        radio_world = self.builder.get_object("WorldRadio")
+        radio_point = self.builder.get_object("PointRadio")
+        
         if self.selected_object_index is not None:
             selected_object = self.world.display_file[self.selected_object_index]
             if angle != "" and selected_object is not None:
                 print(f"Rotating object {selected_object} by {angle} degrees")
-                self.transformator.rotate_object(2, selected_object, float(angle))
-                angle_entry.set_text("")
-                self.viewport_drawing_area.queue_draw()
-
-    def confirm_rotate_object_center(self, widget, data=None):
-        angle_entry = self.builder.get_object("AngleRotateInput")
-        angle = angle_entry.get_text()
-        if self.selected_object_index is not None:
-            selected_object = self.world.display_file[self.selected_object_index]
-            if angle != "" and selected_object is not None:
-                print(f"Rotating object {selected_object} by {angle} degrees")
-                self.transformator.rotate_object_center(2, selected_object, float(angle))
-                angle_entry.set_text("")
-                self.viewport_drawing_area.queue_draw()
-
-    def confirm_rotate_object_origin(self, widget, data=None):
-        angle_entry = self.builder.get_object("AngleRotateInput")
-        angle = angle_entry.get_text()
-        if self.selected_object_index is not None:
-            selected_object = self.world.display_file[self.selected_object_index]
-            if angle != "" and selected_object is not None:
-                print(f"Rotating object {selected_object} by {angle} degrees")
-                self.transformator.rotate_object_origin(2, selected_object, float(angle))
-                angle_entry.set_text("")
-                self.viewport_drawing_area.queue_draw()
-
-    def confirm_rotate_object_point(self, widget, data=None):
-        x_entry = self.builder.get_object("XRotateInput")
-        y_entry = self.builder.get_object("YRotateInput")
-        x = x_entry.get_text()
-        y = y_entry.get_text()
-        angle_entry = self.builder.get_object("AngleRotateInput")
-        angle = angle_entry.get_text()
-        if self.selected_object_index is not None:
-            selected_object = self.world.display_file[self.selected_object_index]
-            if angle != "" and selected_object is not None:
-                print(f"Rotating object {selected_object} by {angle} degrees")
-                self.transformator.rotate_object_origin(2, selected_object, float(angle), Point(int(x), int(y)))
+                if radio_center.get_active():
+                    print("CENTER")
+                    self.transformator.rotate_object_center(2, selected_object, float(angle))
+                elif radio_world.get_active():
+                    self.transformator.rotate_object_origin(2, selected_object, float(angle))
+                elif radio_point.get_active():
+                    print("POINT")
+                    x_entry = self.builder.get_object("XRotateInput")
+                    y_entry = self.builder.get_object("YRotateInput")
+                    x = x_entry.get_text()
+                    y = y_entry.get_text()
+                    self.transformator.rotate_object_point(2, selected_object, float(angle), Point(int(x), int(y)))
+                    x_entry.set_text("")
+                    y_entry.set_text("")
+                else:
+                    pass         
                 angle_entry.set_text("")
                 self.viewport_drawing_area.queue_draw()
 
