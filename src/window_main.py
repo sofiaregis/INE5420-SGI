@@ -172,7 +172,7 @@ class WindowMain():
             selected_object = self.world.display_file[self.selected_object_index]
             if x != "" and y != "" and selected_object is not None:
                 print(f"Scaling object {selected_object} by {x} in x and {y} in y")
-                self.transformator.scale_object(2, selected_object, Point(x, y))
+                self.transformator.scale_object(2, selected_object, Point(float(x), float(y)))
                 x_entry.set_text("")
                 y_entry.set_text("")
                 self.viewport_drawing_area.queue_draw()
@@ -184,7 +184,7 @@ class WindowMain():
             selected_object = self.world.display_file[self.selected_object_index]
             if angle != "" and selected_object is not None:
                 print(f"Rotating object {selected_object} by {angle} degrees")
-                self.transformator.rotate_object(2, selected_object, int(angle))
+                self.transformator.rotate_object(2, selected_object, float(angle))
                 angle_entry.set_text("")
                 self.viewport_drawing_area.queue_draw()
 

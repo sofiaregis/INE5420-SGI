@@ -74,9 +74,9 @@ class Transformator:
         else:
             if n_dimensions == 2:
                 center_coord = object.center()
-                take_to_center_op = self.create_translation_matrix(n_dimensions, -center_coord[0], -center_coord[1])
+                take_to_center_op = self.create_translation_matrix(n_dimensions, Point(-center_coord[0], -center_coord[1]))
                 scale_op = self.create_scale_matrix(n_dimensions, scale_vector)
-                take_back_op = self.create_translation_matrix(n_dimensions, center_coord[0], center_coord[1])
+                take_back_op = self.create_translation_matrix(n_dimensions, Point(center_coord[0], center_coord[1]))
                 temp_op = self.multiply_matrix(take_to_center_op, scale_op)
                 op_matrix = self.multiply_matrix(temp_op, take_back_op)
                 if isinstance(object, Line):
@@ -89,21 +89,25 @@ class Transformator:
                     object.end.x = result_end[0]
                     object.end.y = result_end[1]
                 elif isinstance(object, Wireframe):
+                    new_points = []
                     for point in object.points:
                         homogenous_point = self.create_homogenous_matrix(2, point)
                         result = self.multiply_matrix(homogenous_point, op_matrix)
                         point.x = result[0]
                         point.y = result[1]
+                        new_points.append(point)
+                    object.points = new_points
 
     def rotate_object(self, n_dimensions, object, angle):
+        angle *= (np.pi/180)
         if isinstance(object, Point):
             return
         else:
             if n_dimensions == 2:
                 center_coord = object.center()
-                take_to_center_op = self.create_translation_matrix(n_dimensions, -center_coord[0], -center_coord[1])
+                take_to_center_op = self.create_translation_matrix(n_dimensions, Point(-center_coord[0], -center_coord[1]))
                 rotate_op = self.create_rotate_matrix(n_dimensions, angle)
-                take_back_op = self.create_translation_matrix(n_dimensions, center_coord[0], center_coord[1])
+                take_back_op = self.create_translation_matrix(n_dimensions, Point(center_coord[0], center_coord[1]))
                 temp_op = self.multiply_matrix(take_to_center_op, rotate_op)
                 op_matrix = self.multiply_matrix(temp_op, take_back_op)
                 if isinstance(object, Line):
@@ -116,8 +120,11 @@ class Transformator:
                     object.end.x = result_end[0]
                     object.end.y = result_end[1]
                 elif isinstance(object, Wireframe):
+                    new_points = []
                     for point in object.points:
                         homogenous_point = self.create_homogenous_matrix(2, point)
                         result = self.multiply_matrix(homogenous_point, op_matrix)
                         point.x = result[0]
                         point.y = result[1]
+                        new_points.append(point)
+                    object.points = new_points

@@ -25,6 +25,8 @@ class Wireframe(GraphicalObject):
         cairo.restore()
 
     def center(self):
+        x_center = 0
+        y_center = 0
         for point in self.points:
             x_center += point.x
             y_center += point.y
