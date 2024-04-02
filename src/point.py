@@ -16,4 +16,4 @@ class Point(GraphicalObject):
         cairo.restore()
 
     def center(self):
-        return self.x, self.y
+        return (self.x, self.y)
