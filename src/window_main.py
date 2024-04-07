@@ -82,8 +82,6 @@ class WindowMain():
             chosen_object = self.world.display_file[index]
             if isinstance(chosen_object, Point):
                 locations = [(chosen_object.x, chosen_object.y)]
-            elif isinstance(chosen_object, Line):
-                locations = [(chosen_object.start.x, chosen_object.start.y), (chosen_object.end.x, chosen_object.end.y)]
             else:
                 locations = []
                 for point in chosen_object.points:

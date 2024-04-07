@@ -4,6 +4,8 @@ class Point(GraphicalObject):
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        #self.window_x
+        #self.window_y
         self.color = (0, 0, 0)
 
     def draw(self, viewport, window, cairo):

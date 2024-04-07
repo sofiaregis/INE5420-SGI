@@ -12,3 +12,4 @@ class GraphicalObject(ABC):
     @abstractmethod
     def center(self):
         pass
+    
