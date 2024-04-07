@@ -446,6 +446,16 @@
     <property name="can-focus">False</property>
     <property name="pixbuf">arrow_down.png</property>
   </object>
+  <object class="GtkImage" id="image7">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">rotate_right.png</property>
+  </object>
+  <object class="GtkImage" id="image8">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">rotate_left.png</property>
+  </object>
   <object class="GtkWindow" id="MainWindow">
     <property name="width-request">1150</property>
     <property name="height-request">900</property>
@@ -536,7 +546,7 @@
           </object>
           <packing>
             <property name="x">170</property>
-            <property name="y">280</property>
+            <property name="y">285</property>
           </packing>
         </child>
         <child>
@@ -553,7 +563,7 @@
           </object>
           <packing>
             <property name="x">161</property>
-            <property name="y">250</property>
+            <property name="y">255</property>
           </packing>
         </child>
         <child>
@@ -570,13 +580,11 @@
           </object>
           <packing>
             <property name="x">225</property>
-            <property name="y">285</property>
+            <property name="y">290</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="UpButton">
-            <property name="width-request">35</property>
-            <property name="height-request">50</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
@@ -586,7 +594,7 @@
           </object>
           <packing>
             <property name="x">69</property>
-            <property name="y">257</property>
+            <property name="y">254</property>
           </packing>
         </child>
         <child>
@@ -601,13 +609,12 @@
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">290</property>
+            <property name="y">278</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="RightButton">
             <property name="width-request">50</property>
-            <property name="height-request">34</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
@@ -616,13 +623,11 @@
           </object>
           <packing>
             <property name="x">104</property>
-            <property name="y">290</property>
+            <property name="y">278</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="DownButton">
-            <property name="width-request">36</property>
-            <property name="height-request">50</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
@@ -631,7 +636,7 @@
           </object>
           <packing>
             <property name="x">69</property>
-            <property name="y">305</property>
+            <property name="y">293</property>
           </packing>
         </child>
         <child>
@@ -648,7 +653,7 @@
           </object>
           <packing>
             <property name="x">205</property>
-            <property name="y">320</property>
+            <property name="y">330</property>
           </packing>
         </child>
         <child>
@@ -663,7 +668,7 @@
           </object>
           <packing>
             <property name="x">160</property>
-            <property name="y">320</property>
+            <property name="y">330</property>
           </packing>
         </child>
         <child>
@@ -1387,7 +1392,31 @@
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">377</property>
+            <property name="y">384</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="RotateRightButton">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="image">image7</property>
+          </object>
+          <packing>
+            <property name="x">110</property>
+            <property name="y">335</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="RotateLeftButton">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="image">image8</property>
+          </object>
+          <packing>
+            <property name="x">30</property>
+            <property name="y">335</property>
           </packing>
         </child>
       </object>
