@@ -13,7 +13,7 @@ class WindowMain():
     def __init__(self, world, viewport):
         self.world = world
         self.viewport = viewport
-        self.transformator = Transformator()
+        self.transformator = Transformator(self.world)
 
         # Get GUI Glade file
         self.builder = Gtk.Builder()
@@ -155,7 +155,7 @@ class WindowMain():
         if self.selected_object_index is not None:
             selected_object = self.world.display_file[self.selected_object_index]
             if x != "" and y != "" and selected_object is not None:
-                self.transformator.move_object(2, selected_object, Point(int(x), int(y)))
+                self.transformator.move_object(2, selected_object, Point(int(x), int(y), self.world.window))
                 x_entry.set_text("")
                 y_entry.set_text("")
                 self.viewport_drawing_area.queue_draw()
@@ -168,7 +168,7 @@ class WindowMain():
         if self.selected_object_index is not None:
             selected_object = self.world.display_file[self.selected_object_index]
             if x != "" and y != "" and selected_object is not None:
-                self.transformator.scale_object(2, selected_object, Point(float(x), float(y)))
+                self.transformator.scale_object(2, selected_object, Point(float(x), float(y), self.world.window))
                 x_entry.set_text("")
                 y_entry.set_text("")
                 self.viewport_drawing_area.queue_draw()
@@ -192,7 +192,7 @@ class WindowMain():
                     y_entry = self.builder.get_object("YRotateInput")
                     x = x_entry.get_text()
                     y = y_entry.get_text()
-                    self.transformator.rotate_object_point(2, selected_object, float(angle), Point(int(x), int(y)))
+                    self.transformator.rotate_object_point(2, selected_object, float(angle), Point(int(x), int(y), self.world.window))
                     x_entry.set_text("")
                     y_entry.set_text("")
                 else:

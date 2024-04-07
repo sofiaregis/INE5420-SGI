@@ -10,5 +10,5 @@ class World:
     
     def add_object(self, object : GraphicalObject):
         translation_vector = Point(self.window.x_center, self.window.y_center, self.window)
-        Transformator().move_object(2, object, translation_vector)
+        Transformator(self).move_object(2, object, translation_vector)
         self.display_file.append(object)
