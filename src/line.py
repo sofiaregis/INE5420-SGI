@@ -2,11 +2,13 @@ from graphical_object import GraphicalObject
 from point import Point
 
 class Line(GraphicalObject):
-    def __init__(self, x1, y1, x2, y2):
-        self.points = (Point(x1, y1), Point(x2, y2))
+    def __init__(self, x1, y1, x2, y2, window):
+        self.points = (Point(x1, y1, window), Point(x2, y2, window))
         self.color = (0, 0, 0)
 
     def draw(self, viewport, window, cairo):
+        for point in self.points:
+            point.update_scn()
         viewport_point_start = viewport.viewport_transformation(self.points[0], window)
         viewport_point_end = viewport.viewport_transformation(self.points[1], window)
         cairo.save()

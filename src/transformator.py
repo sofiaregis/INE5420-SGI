@@ -44,11 +44,8 @@ class Transformator:
     #Transformations for objects
     def move_point(self, n_dimensions, point, vector):
         homogenous_matrix = self.create_homogenous_matrix(n_dimensions, point)
-        print(homogenous_matrix)
         move_matrix = self.create_translation_matrix(n_dimensions, vector)
-        print(move_matrix)
         result = self.multiply_matrix(homogenous_matrix, move_matrix)
-        print(result)
         point.x = result[0]
         point.y = result[1]
     
@@ -59,9 +56,7 @@ class Transformator:
         elif isinstance(object, Line) or isinstance(object, Wireframe):
             new_points = []
             for point in object.points:
-                print("Before move:" +str(point.x)+ ", "+str(point.y))
                 self.move_point(n_dimensions, point, vector)
-                print("After move:" +str(point.x)+ ", "+str(point.y))
                 new_points.append(point)
             object.points = new_points
 
@@ -163,3 +158,9 @@ class Transformator:
                     point.y = result[1]
                     new_points.append(point)
                 object.points = new_points               
+
+    def world_to_scn_coords(self, n_dimensions, point, window):
+        if n_dimensions == 2:
+            scn_x = (point[0] - -1) / (1 - -1) * (window.x_max)
+            scn_y = (point[1] - -1) / (1 - -1) * (window.y_max)
+            return (scn_x, scn_y)

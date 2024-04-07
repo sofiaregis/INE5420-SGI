@@ -24,7 +24,7 @@ class WindowMain():
         self.object_description = self.builder.get_object("LogTextView")
     
         #Create different windows
-        self.object_window = ObjectWindow(self, self.builder)
+        self.object_window = ObjectWindow(self, self.builder, self.world.window)
 
         # Display main window
         self.windowMain = self.builder.get_object("MainWindow")
@@ -155,7 +155,6 @@ class WindowMain():
         if self.selected_object_index is not None:
             selected_object = self.world.display_file[self.selected_object_index]
             if x != "" and y != "" and selected_object is not None:
-                print(f"Moving object {selected_object} adding {x} to x and {y} to y")
                 self.transformator.move_object(2, selected_object, Point(int(x), int(y)))
                 x_entry.set_text("")
                 y_entry.set_text("")
@@ -169,7 +168,6 @@ class WindowMain():
         if self.selected_object_index is not None:
             selected_object = self.world.display_file[self.selected_object_index]
             if x != "" and y != "" and selected_object is not None:
-                print(f"Scaling object {selected_object} by {x} in x and {y} in y")
                 self.transformator.scale_object(2, selected_object, Point(float(x), float(y)))
                 x_entry.set_text("")
                 y_entry.set_text("")
@@ -185,14 +183,11 @@ class WindowMain():
         if self.selected_object_index is not None:
             selected_object = self.world.display_file[self.selected_object_index]
             if angle != "" and selected_object is not None:
-                print(f"Rotating object {selected_object} by {angle} degrees")
                 if radio_center.get_active():
-                    print("CENTER")
                     self.transformator.rotate_object_center(2, selected_object, float(angle))
                 elif radio_world.get_active():
                     self.transformator.rotate_object_origin(2, selected_object, float(angle))
                 elif radio_point.get_active():
-                    print("POINT")
                     x_entry = self.builder.get_object("XRotateInput")
                     y_entry = self.builder.get_object("YRotateInput")
                     x = x_entry.get_text()

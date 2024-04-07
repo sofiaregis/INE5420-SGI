@@ -1,3 +1,4 @@
+from point import Point
 
 class Window:
     def __init__(self, x_min, x_max, y_min, y_max):

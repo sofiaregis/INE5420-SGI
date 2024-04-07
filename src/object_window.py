@@ -8,8 +8,9 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import GObject, Gtk, GdkPixbuf, cairo
 
 class ObjectWindow:
-    def __init__(self, main_window, builder):
+    def __init__(self, main_window, builder, window):
         self.main_window = main_window
+        self.window = window
 
         # Set create object window and Wireframe Treeview
         self.builder = builder
@@ -38,17 +39,17 @@ class ObjectWindow:
 
         # Create new point
         if None not in [input["PointXInput"], input["PointXInput"]]:
-            self.main_window.world.add_object(Point(input["PointXInput"], input["PointYInput"]))
+            self.main_window.world.add_object(Point(input["PointXInput"], input["PointYInput"], self.window))
         
         # Create new line
         elif None not in [input["LineX1Input"], input["LineY1Input"], input["LineX2Input"], input["LineY2Input"]]:
-            self.main_window.world.add_object(Line(int(input["LineX1Input"]), int(input["LineY1Input"]), int(input["LineX2Input"]), int(input["LineY2Input"])))
+            self.main_window.world.add_object(Line(int(input["LineX1Input"]), int(input["LineY1Input"]), int(input["LineX2Input"]), int(input["LineY2Input"]), self.window))
 
         # Create new wireframe
         if self.wireframe_points != []:
             new_wireframe_points = []
             for point in self.wireframe_points:
-                new_wireframe_points.append(Point(point[0], point[1]))
+                new_wireframe_points.append(Point(point[0], point[1], self.window))
             self.main_window.world.add_object(Wireframe(new_wireframe_points))
             self.wireframe_points_liststore.clear()
             self.wireframe_points = []
