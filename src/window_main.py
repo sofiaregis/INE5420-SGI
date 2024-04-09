@@ -145,6 +145,14 @@ class WindowMain():
         percentage = int(self.step_entry.get_text())
         self.world.window.zoom_out(percentage)
         self.viewport_drawing_area.queue_draw()
+    
+    def press_rotate_right_button(self, widget, data=None):
+        self.world.window.rotate_right(45)
+        self.viewport_drawing_area.queue_draw()
+
+    def press_rotate_left_button(self, widget, data=None):
+        self.world.window.rotate_left(45)
+        self.viewport_drawing_area.queue_draw()
 
     #Object Manipulation
     def confirm_move_object(self, widget, data=None):

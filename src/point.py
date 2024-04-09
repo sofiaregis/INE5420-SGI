@@ -26,23 +26,26 @@ class Point(GraphicalObject):
         x = copy.deepcopy(self.x)
         y = copy.deepcopy(self.y)
         translation_vector = (-self.window.x_center, -self.window.y_center)
-        print(translation_vector)
-        print("x:" + str(x) + ", y:" + str(y))
+        #print(translation_vector)
+        #print("x:" + str(x) + ", y:" + str(y))
         result = self.move_point_xy(2, x, y, translation_vector)
         x = result[0]
         y = result[1]
-        print("x:" + str(x) + ", y:" + str(y))
+        #print("x:" + str(x) + ", y:" + str(y))
         angle = self.angle_between((0,1), self.window.viewup)/(np.pi/180)
-        print("angle:" + str(angle))
+        #print("angle:" + str(angle))
         if angle != 0:
-            result = self.rotate_object_origin_xy(2, x, y, angle)
+            if self.window.viewup[0] < 0:
+                angle = 360 - angle
+            print("Angle:"+str(angle))
+            result = self.rotate_point_origin_xy(2, x, y, angle)
             x = result[0]
             y = result[1]
         #self.scn_x = -1 + 2 * (x - self.window.x_min) / (self.window.x_max - self.window.x_min)
         #self.scn_y = -1 + 2 * (y - self.window.y_min) / (self.window.y_max - self.window.y_min)
         self.scn_x = -1 + 2 * (x - (self.window.x_min - self.window.x_center)) / ((self.window.x_max - self.window.x_center) - (self.window.x_min - self.window.x_center))
         self.scn_y = -1 + 2 * (y - (self.window.y_min - self.window.y_center)) / ((self.window.y_max - self.window.y_center) - (self.window.y_min - self.window.y_center))
-        print("scn_x:" + str(self.scn_x) + ", scn_y:" + str(self.scn_y))
+        #print("scn_x:" + str(self.scn_x) + ", scn_y:" + str(self.scn_y))
 
     def create_homogenous_matrix_xy(self, n_dimensions, x, y):
         if n_dimensions == 2:
@@ -69,7 +72,7 @@ class Point(GraphicalObject):
                              [      0,             0,         1]]
         return rotate_matrix
     
-    def rotate_object_origin_xy(self, n_dimensions, x, y, angle):
+    def rotate_point_origin_xy(self, n_dimensions, x, y, angle):
         angle *= (np.pi/180)
         if n_dimensions == 2:
             op_matrix = self.create_rotate_matrix(n_dimensions, angle)
@@ -87,8 +90,10 @@ class Point(GraphicalObject):
         return vector / np.linalg.norm(vector)
 
     def angle_between(self, v1, v2):
+        print(str(v2))
         v1_u = self.unit_vector(v1)
         v2_u = self.unit_vector(v2)
+        print(str(v2_u))
         return np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0))
 
     def center(self):
