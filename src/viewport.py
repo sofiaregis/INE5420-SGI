@@ -7,6 +7,6 @@ class Viewport:
         self.yvpmax = 600
 
     def viewport_transformation(self, point: Point, window: Window):
-        new_x = ((point.x - window.x_min)/(window.x_max - window.x_min)) * (self.xvpmax)
-        new_y = (1 - (point.y - window.y_min)/(window.y_max - window.y_min)) * (self.yvpmax)
-        return Point(new_x, new_y)
+        new_x = ((point.scn_x - -1)/(1 - -1)) * (self.xvpmax)
+        new_y = (1 - (point.scn_y - -1)/(1 - -1)) * (self.yvpmax)
+        return Point(new_x, new_y, window)

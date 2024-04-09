@@ -2,14 +2,17 @@ from graphical_object import GraphicalObject
 from point import Point
 
 class Line(GraphicalObject):
-    def __init__(self, x1, y1, x2, y2):
-        self.start = Point(x1, y1)
-        self.end = Point(x2, y2)
-        self.color = (0, 0, 0)
+    def __init__(self, x1, y1, x2, y2, window):
+        self.name = ""
+        self.points = (Point(x1, y1, window), Point(x2, y2, window))
+        self.color = (0.0, 0.0, 0.0)
+        self.rgb = (0.0, 0.0, 0.0)
 
     def draw(self, viewport, window, cairo):
-        viewport_point_start = viewport.viewport_transformation(self.start, window)
-        viewport_point_end = viewport.viewport_transformation(self.end, window)
+        for point in self.points:
+            point.update_scn()
+        viewport_point_start = viewport.viewport_transformation(self.points[0], window)
+        viewport_point_end = viewport.viewport_transformation(self.points[1], window)
         cairo.save()
         cairo.set_source_rgb(self.color[0], self.color[1], self.color[2])
         cairo.move_to(viewport_point_start.x, viewport_point_start.y)
@@ -18,6 +21,6 @@ class Line(GraphicalObject):
         cairo.restore()
     
     def center(self):
-        x_center = (self.start.x + self.end.x) / 2
-        y_center = (self.start.y + self.end.y) / 2
+        x_center = (self.points[0].x + self.points[1].x) / 2
+        y_center = (self.points[0].x + self.points[1].y) / 2
         return (x_center, y_center)

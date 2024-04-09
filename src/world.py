@@ -1,4 +1,5 @@
 from window import Window
+from point import Point
 from graphical_object import GraphicalObject
 
 class World:

@@ -1,10 +1,14 @@
+import numpy as np
 
 class Window:
     def __init__(self, x_min, x_max, y_min, y_max):
-        self.x_min = x_min        
+        self.x_min = x_min
         self.x_max = x_max
-        self.y_min = y_min        
+        self.y_min = y_min
         self.y_max = y_max
+        self.x_center = (x_min + x_max) / 2
+        self.y_center = (y_min + y_max) / 2
+        self.viewup = (0, 1)
 
     def move_up(self, step):
         self.y_min += step
@@ -33,3 +37,29 @@ class Window:
         self.x_max *= percentage/100 + 1
         self.y_min *= percentage/100 + 1
         self.y_max *= percentage/100 + 1
+
+    def unit_vector(self, vector):
+        return vector / np.linalg.norm(vector)
+
+    def rotate_right(self, angle):
+        A = np.array([self.viewup[0], self.viewup[1]])
+        
+        theta = np.radians(angle)
+        c, s = np.cos(theta), np.sin(theta)
+        R = np.array(((c,-s), (s, c)))
+
+        A = self.unit_vector(np.dot(R, A))
+        self.viewup = (A[0], A[1])
+
+    def rotate_left(self, angle):
+        angle *= -1
+
+        A = np.array([self.viewup[0], self.viewup[1]])
+
+        theta = np.radians(angle)
+        c, s = np.cos(theta), np.sin(theta)
+        R = np.array(((c,-s), (s, c)))
+
+        A = self.unit_vector(np.dot(R, A))
+        self.viewup = (A[0], A[1])
+
