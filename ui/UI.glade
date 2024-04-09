@@ -138,7 +138,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="PointNameInput">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                       </object>
@@ -148,7 +148,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="PointNameInput">
+                      <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Object Name</property>
@@ -311,7 +311,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="LineNameInput">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                       </object>
@@ -321,7 +321,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="LineNameInput">
+                      <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Object Name</property>
@@ -453,7 +453,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="WireframeNameInput">
                         <property name="height-request">34</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -1542,6 +1542,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <signal name="pressed" handler="press_save_object_button" swapped="no"/>
           </object>
           <packing>
             <property name="x">20</property>
@@ -1555,6 +1556,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <signal name="pressed" handler="press_load_object_button" swapped="no"/>
           </object>
           <packing>
             <property name="x">138</property>

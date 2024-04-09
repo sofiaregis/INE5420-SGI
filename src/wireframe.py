@@ -3,8 +3,10 @@ from point import Point
 
 class Wireframe(GraphicalObject):
     def __init__(self, points):
+        self.name = ""
         self.points = points
-        self.color = (0, 0, 0)
+        self.color = (0.0, 0.0, 0.0)
+        self.rgb = (0.0, 0.0, 0.0)
 
     def draw(self, viewport, window, cairo):
         for point in self.points:

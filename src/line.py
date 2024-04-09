@@ -3,8 +3,10 @@ from point import Point
 
 class Line(GraphicalObject):
     def __init__(self, x1, y1, x2, y2, window):
+        self.name = ""
         self.points = (Point(x1, y1, window), Point(x2, y2, window))
-        self.color = (0, 0, 0)
+        self.color = (0.0, 0.0, 0.0)
+        self.rgb = (0.0, 0.0, 0.0)
 
     def draw(self, viewport, window, cairo):
         for point in self.points:

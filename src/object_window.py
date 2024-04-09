@@ -29,28 +29,49 @@ class ObjectWindow:
 
     def confirm(self, widget):
         input = {"PointXInput":None, "PointYInput":None, "LineX1Input":None, "LineY1Input":None,
-                 "LineX2Input":None, "LineY2Input":None, "WireframeXInput":None, "WireframeYInput":None}
+                 "LineX2Input":None, "LineY2Input":None, "WireframeXInput":None, "WireframeYInput":None,
+                 "PointNameInput":None, "PointColorInput":None, "LineNameInput":None, "LineColorInput":None,
+                 "WireframeNameInput":None, "WireframeColorInput":None}
         
         # Get all input values
         for key in input.keys():
-            entry = self.builder.get_object(key).get_text()
+            try:
+                entry = self.builder.get_object(key).get_text()
+            except AttributeError:
+                if self.builder.get_object(key) != None:
+                    entry = self.builder.get_object(key).get_rgba()
             if entry != "":
-                input[key] = int(entry)
+                try:
+                    input[key] = int(entry)
+                except (ValueError, TypeError):
+                    input[key] = entry
 
         # Create new point
-        if None not in [input["PointXInput"], input["PointXInput"]]:
-            self.main_window.world.add_object(Point(input["PointXInput"], input["PointYInput"], self.window))
+        if None not in [input["PointXInput"], input["PointXInput"], input["PointNameInput"], input["PointColorInput"]]:
+            point = Point(input["PointXInput"], input["PointYInput"], self.window)
+            point.name = input["PointNameInput"]
+            point.color = (input["PointColorInput"].red, input["PointColorInput"].green, input["PointColorInput"].blue)
+            point.rgb = (input["PointColorInput"].red, input["PointColorInput"].green, input["PointColorInput"].blue)
+            self.main_window.world.add_object(point)
         
         # Create new line
-        elif None not in [input["LineX1Input"], input["LineY1Input"], input["LineX2Input"], input["LineY2Input"]]:
-            self.main_window.world.add_object(Line(int(input["LineX1Input"]), int(input["LineY1Input"]), int(input["LineX2Input"]), int(input["LineY2Input"]), self.window))
+        elif None not in [input["LineX1Input"], input["LineY1Input"], input["LineX2Input"], input["LineY2Input"], input["LineNameInput"], input["LineColorInput"]]:
+            line = Line(int(input["LineX1Input"]), int(input["LineY1Input"]), int(input["LineX2Input"]), int(input["LineY2Input"]), self.window)
+            line.name = input["LineNameInput"]
+            line.color = (input["LineColorInput"].red, input["LineColorInput"].green, input["LineColorInput"].blue)
+            line.rgb = (input["LineColorInput"].red, input["LineColorInput"].green, input["LineColorInput"].blue)
+            self.main_window.world.add_object(line)
 
         # Create new wireframe
-        if self.wireframe_points != []:
+        if self.wireframe_points != [] and None not in [input["WireframeNameInput"], input["WireframeColorInput"]]:
             new_wireframe_points = []
             for point in self.wireframe_points:
                 new_wireframe_points.append(Point(point[0], point[1], self.window))
-            self.main_window.world.add_object(Wireframe(new_wireframe_points))
+            wireframe = Wireframe(new_wireframe_points)
+            wireframe.name = input["WireframeNameInput"]
+            wireframe.color = (input["WireframeColorInput"].red, input["WireframeColorInput"].green, input["WireframeColorInput"].blue)
+            wireframe.color = (input["WireframeColorInput"].red, input["WireframeColorInput"].green, input["WireframeColorInput"].blue)
+            self.main_window.world.add_object(wireframe)
             self.wireframe_points_liststore.clear()
             self.wireframe_points = []
         self.close(widget)

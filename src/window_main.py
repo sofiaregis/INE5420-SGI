@@ -3,7 +3,9 @@ from point import Point
 from line import Line
 from wireframe import Wireframe
 from object_window import ObjectWindow
+from obj_descriptor import ObjDescriptor
 from transformator import Transformator
+import os
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -14,6 +16,7 @@ class WindowMain():
         self.world = world
         self.viewport = viewport
         self.transformator = Transformator(self.world)
+        self.obj_descriptor = ObjDescriptor()
 
         # Get GUI Glade file
         self.builder = Gtk.Builder()
@@ -63,10 +66,10 @@ class WindowMain():
         if iters is not None:
             index = int(str(model.get_path(iters)))
             if self.selected_object_index is not None:
-                self.world.display_file[self.selected_object_index].color = (0, 0, 0)
+                self.world.display_file[self.selected_object_index].color = self.world.display_file[self.selected_object_index].rgb
             self.selected_object_index = index
             self.update_log(index)
-            self.world.display_file[self.selected_object_index].color = (1, 0, 0)
+            self.world.display_file[self.selected_object_index].color = (1.0, 0.0, 0.0)
         self.viewport_drawing_area.queue_draw()
 
     def delete_selected_object(self, widget):
@@ -100,7 +103,8 @@ class WindowMain():
         for i in range(len(self.world.display_file)):
             object_class = self.world.display_file[i].__class__.__name__
             objects_dict[object_class] += 1
-            self.objects_liststore.append([f"{object_class} {objects_dict[object_class]}"])
+            object_name = self.world.display_file[i].name
+            self.objects_liststore.append([f"{object_name} ({object_class} {objects_dict[object_class]})"])
 
     def on_draw(self, widget, cairo):
         cairo.save()
@@ -153,6 +157,49 @@ class WindowMain():
     def press_rotate_left_button(self, widget, data=None):
         self.world.window.rotate_left(45)
         self.viewport_drawing_area.queue_draw()
+
+    def press_load_object_button(self, widget, data=None):
+        dialog = Gtk.FileChooserDialog("Please choose a file", self.windowMain,
+            Gtk.FileChooserAction.OPEN,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        
+        dialog.set_current_folder(os.getcwd().replace("src", "objects"))
+
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            file_path = dialog.get_filename()
+            print("Open clicked")
+            print("File selected: " + file_path)
+            self.obj_descriptor.obj_to_object(file_path, self.world)
+            self.viewport_drawing_area.queue_draw()
+            self.create_treeview_items()
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Cancel clicked")
+
+        dialog.destroy()
+
+    def press_save_object_button(self, widget, data=None):
+        print('save')
+        dialog = Gtk.FileChooserDialog("Please choose a file", self.windowMain,
+            Gtk.FileChooserAction.SAVE,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_SAVE, Gtk.ResponseType.OK))
+
+        dialog.set_current_folder(os.getcwd().replace("src", "objects"))
+
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            file_path = dialog.get_filename()
+            print("Save clicked")
+            print("File selected: " + file_path)
+            if self.selected_object_index is not None:
+                selected_object = self.world.display_file[self.selected_object_index]
+                self.obj_descriptor.object_to_obj(selected_object, file_path)
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Cancel clicked")
+
+        dialog.destroy()
 
     #Object Manipulation
     def confirm_move_object(self, widget, data=None):
