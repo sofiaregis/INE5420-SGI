@@ -8,7 +8,7 @@ class Window:
         self.y_max = y_max
         self.x_center = (x_min + x_max) / 2
         self.y_center = (y_min + y_max) / 2
-        self.viewup = Point(0, 1, self)
+        self.viewup = (0, 1)
 
     def move_up(self, step):
         self.y_min += step

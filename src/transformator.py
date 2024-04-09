@@ -13,6 +13,11 @@ class Transformator:
         if n_dimensions == 2:
             matrix = [point.x,   point.y,    1]
         return matrix
+    
+    def create_homogenous_matrix_xy(self, n_dimensions, x, y):
+        if n_dimensions == 2:
+            matrix = [x,    y,    1]
+        return matrix
 
     def create_translation_matrix(self, n_dimensions, vector):
         if n_dimensions == 2:
@@ -42,6 +47,13 @@ class Transformator:
             return None
     
     #Transformations for objects
+    def move_point_xy(self, n_dimensions, x, y, vector):
+        homogenous_matrix = self.create_homogenous_matrix(n_dimensions, x, y)
+        move_matrix = self.create_translation_matrix(n_dimensions, vector)
+        result = self.multiply_matrix(homogenous_matrix, move_matrix)
+        x = result[0]
+        y = result[1]
+
     def move_point(self, n_dimensions, point, vector):
         homogenous_matrix = self.create_homogenous_matrix(n_dimensions, point)
         move_matrix = self.create_translation_matrix(n_dimensions, vector)
@@ -80,27 +92,6 @@ class Transformator:
                     new_points.append(point)
                 object.points = new_points
 
-    def rotate_object(self, n_dimensions, object, angle):
-        angle *= (np.pi/180)
-        if isinstance(object, Point):
-            return
-        else:
-            if n_dimensions == 2:
-                center_coord = object.center()
-                take_to_center_op = self.create_translation_matrix(n_dimensions, Point(-center_coord[0], -center_coord[1], self.window))
-                rotate_op = self.create_rotate_matrix(n_dimensions, angle)
-                take_back_op = self.create_translation_matrix(n_dimensions, Point(center_coord[0], center_coord[1], self.window))
-                temp_op = self.multiply_matrix(take_to_center_op, rotate_op)
-                op_matrix = self.multiply_matrix(temp_op, take_back_op)
-                new_points = []
-                for point in object.points:
-                    homogenous_point = self.create_homogenous_matrix(2, point)
-                    result = self.multiply_matrix(homogenous_point, op_matrix)
-                    point.x = result[0]
-                    point.y = result[1]
-                    new_points.append(point)
-                object.points = new_points
-
     def rotate_object_center(self, n_dimensions, object, angle):
         angle *= (np.pi/180)
         if isinstance(object, Point):
@@ -125,7 +116,13 @@ class Transformator:
     def rotate_object_origin(self, n_dimensions, object, angle):
         angle *= (np.pi/180)
         if isinstance(object, Point):
-            return
+            if n_dimensions == 2:
+                op_matrix = self.create_rotate_matrix(n_dimensions, angle)
+                new_points = []
+                homogenous_point = self.create_homogenous_matrix(2, object)
+                result = self.multiply_matrix(homogenous_point, op_matrix)
+                object.x = result[0]
+                object.y = result[1]
         else:
             if n_dimensions == 2:
                 op_matrix = self.create_rotate_matrix(n_dimensions, angle)
