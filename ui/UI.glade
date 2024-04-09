@@ -137,6 +137,42 @@
                         <property name="y">55</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkEntry">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                      </object>
+                      <packing>
+                        <property name="x">228</property>
+                        <property name="y">128</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="PointNameInput">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Object Name</property>
+                      </object>
+                      <packing>
+                        <property name="x">270</property>
+                        <property name="y">106</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkColorButton" id="PointColorInput">
+                        <property name="width-request">90</property>
+                        <property name="height-request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="title" translatable="yes">Pick a color for the Point</property>
+                        <property name="rgba">rgb(0,0,0)</property>
+                      </object>
+                      <packing>
+                        <property name="x">67</property>
+                        <property name="y">119</property>
+                      </packing>
+                    </child>
                   </object>
                 </child>
                 <child type="tab">
@@ -259,6 +295,42 @@
                         <property name="y">85</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkColorButton" id="LineColorInput">
+                        <property name="width-request">90</property>
+                        <property name="height-request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="title" translatable="yes">Pick a color for the LINE</property>
+                        <property name="rgba">rgb(0,0,0)</property>
+                      </object>
+                      <packing>
+                        <property name="x">67</property>
+                        <property name="y">143</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                      </object>
+                      <packing>
+                        <property name="x">228</property>
+                        <property name="y">158</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="LineNameInput">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Object Name</property>
+                      </object>
+                      <packing>
+                        <property name="x">270</property>
+                        <property name="y">137</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="position">1</property>
@@ -364,7 +436,6 @@
                         <property name="height-request">119</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="margin-right">24</property>
                         <property name="shadow-type">in</property>
                         <child>
                           <object class="GtkTreeView" id="WireframeTreelistPoints">
@@ -377,8 +448,49 @@
                         </child>
                       </object>
                       <packing>
-                        <property name="x">200</property>
+                        <property name="x">192</property>
                         <property name="y">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry">
+                        <property name="height-request">34</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="margin-bottom">20</property>
+                        <property name="width-chars">17</property>
+                      </object>
+                      <packing>
+                        <property name="x">197</property>
+                        <property name="y">158</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkColorButton">
+                        <property name="width-request">90</property>
+                        <property name="height-request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="title" translatable="yes">Pick a color for the WIREFRAME</property>
+                        <property name="rgba">rgb(0,0,0)</property>
+                      </object>
+                      <packing>
+                        <property name="x">64</property>
+                        <property name="y">145</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="label" translatable="yes">Object Name</property>
+                        <property name="max-width-chars">11</property>
+                      </object>
+                      <packing>
+                        <property name="x">240</property>
+                        <property name="y">137</property>
                       </packing>
                     </child>
                   </object>
@@ -546,7 +658,7 @@
           </object>
           <packing>
             <property name="x">170</property>
-            <property name="y">285</property>
+            <property name="y">325</property>
           </packing>
         </child>
         <child>
@@ -563,7 +675,7 @@
           </object>
           <packing>
             <property name="x">161</property>
-            <property name="y">255</property>
+            <property name="y">295</property>
           </packing>
         </child>
         <child>
@@ -580,7 +692,7 @@
           </object>
           <packing>
             <property name="x">225</property>
-            <property name="y">290</property>
+            <property name="y">330</property>
           </packing>
         </child>
         <child>
@@ -594,7 +706,7 @@
           </object>
           <packing>
             <property name="x">69</property>
-            <property name="y">254</property>
+            <property name="y">294</property>
           </packing>
         </child>
         <child>
@@ -609,7 +721,7 @@
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">278</property>
+            <property name="y">318</property>
           </packing>
         </child>
         <child>
@@ -623,7 +735,7 @@
           </object>
           <packing>
             <property name="x">104</property>
-            <property name="y">278</property>
+            <property name="y">318</property>
           </packing>
         </child>
         <child>
@@ -636,7 +748,7 @@
           </object>
           <packing>
             <property name="x">69</property>
-            <property name="y">293</property>
+            <property name="y">333</property>
           </packing>
         </child>
         <child>
@@ -653,7 +765,7 @@
           </object>
           <packing>
             <property name="x">205</property>
-            <property name="y">330</property>
+            <property name="y">370</property>
           </packing>
         </child>
         <child>
@@ -668,7 +780,7 @@
           </object>
           <packing>
             <property name="x">160</property>
-            <property name="y">330</property>
+            <property name="y">370</property>
           </packing>
         </child>
         <child>
@@ -678,6 +790,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="editable">False</property>
+            <property name="wrap-mode">word</property>
             <property name="cursor-visible">False</property>
             <property name="monospace">True</property>
           </object>
@@ -730,7 +843,7 @@
           </object>
           <packing>
             <property name="x">38</property>
-            <property name="y">226</property>
+            <property name="y">266</property>
           </packing>
         </child>
         <child>
@@ -1392,7 +1505,7 @@
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">384</property>
+            <property name="y">417</property>
           </packing>
         </child>
         <child>
@@ -1404,7 +1517,7 @@
           </object>
           <packing>
             <property name="x">110</property>
-            <property name="y">335</property>
+            <property name="y">375</property>
           </packing>
         </child>
         <child>
@@ -1416,7 +1529,34 @@
           </object>
           <packing>
             <property name="x">30</property>
-            <property name="y">335</property>
+            <property name="y">375</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="SaveObjectsButton">
+            <property name="label" translatable="yes">Save</property>
+            <property name="width-request">67</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+          </object>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">220</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="LoadObjectsButton">
+            <property name="label" translatable="yes">Load Objects</property>
+            <property name="width-request">159</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+          </object>
+          <packing>
+            <property name="x">91</property>
+            <property name="y">220</property>
           </packing>
         </child>
       </object>
