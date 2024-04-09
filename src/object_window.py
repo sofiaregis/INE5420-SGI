@@ -54,7 +54,7 @@ class ObjectWindow:
             self.wireframe_points_liststore.clear()
             self.wireframe_points = []
         self.close(widget)
-        self.create_treeview_items()
+        self.main_window.create_treeview_items()
 
     def add_point_wireframe(self, widget):
         x_entry = self.builder.get_object("WireframeXInput")
