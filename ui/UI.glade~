@@ -466,7 +466,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkColorButton">
+                      <object class="GtkColorButton" id="WireframeColorInput">
                         <property name="width-request">90</property>
                         <property name="height-request">50</property>
                         <property name="visible">True</property>
