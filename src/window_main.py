@@ -69,7 +69,6 @@ class WindowMain():
                 self.world.display_file[self.selected_object_index].color = self.world.display_file[self.selected_object_index].rgb
             self.selected_object_index = index
             self.update_log(index)
-            self.world.display_file[self.selected_object_index].color = (1.0, 0.0, 0.0)
         self.viewport_drawing_area.queue_draw()
 
     def delete_selected_object(self, widget):

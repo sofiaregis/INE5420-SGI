@@ -55,7 +55,7 @@ class ObjDescriptor:
             points = []
             for line in f:
                 x, y = line.strip().split(", ")
-                points.append(Point(int(x), int(y), world.window))
+                points.append(Point(float(x), float(y), world.window))
             wireframe = Wireframe(points)
             wireframe.name = name
             wireframe.color = rgb

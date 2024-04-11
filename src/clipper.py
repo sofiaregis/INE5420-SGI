@@ -3,7 +3,7 @@ from line import Line
 from wireframe import Wireframe
 
 class Clipper:
-    def __init__(self)
+    def __init__(self):
         pass
 
     def clip(self, display_file, viewport, object):
