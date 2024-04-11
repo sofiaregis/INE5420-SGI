@@ -1,4 +1,5 @@
 from viewport import Viewport
+from clipper import Clipper
 from point import Point
 from line import Line
 from wireframe import Wireframe
@@ -116,8 +117,10 @@ class WindowMain():
         cairo.fill()
         cairo.restore()
 
-        for i in range(len(self.world.display_file)):
-            self.world.display_file[i].draw(self.viewport, self.world.window, cairo)
+        display_file_clipped = Clipper().clip(self.world.display_file)
+
+        for object in display_file_clipped:
+            object.draw(self.viewport, self.world.window, cairo)
 
     def press_up_button(self, widget, data=None):
         step = int(self.step_entry.get_text())

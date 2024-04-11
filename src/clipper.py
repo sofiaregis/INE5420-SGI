@@ -6,13 +6,16 @@ class Clipper:
     def __init__(self):
         pass
 
-    def clip(self, display_file, viewport, object):
+    def clip(self, display_file):
         new_display_file = []
         for obj in display_file:
             if isinstance(obj, Point):
                 new_point = self.clip_point(obj)
                 if new_point:
                     new_display_file.append(new_point)
+            else:
+                new_display_file.append(obj)
+            """
             elif isinstance(obj, Line):
                 new_line = self.clip_line(obj)
                 if new_line:
@@ -21,7 +24,7 @@ class Clipper:
                 new_wireframe = self.clip_wireframe(obj)
                 if new_wireframe:
                     new_display_file.append(new_wireframe)
-
+            """
         return new_display_file
         
     def clip_point(self, point):
