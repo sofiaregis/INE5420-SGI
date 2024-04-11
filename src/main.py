@@ -12,10 +12,9 @@ viewport = Viewport()
 main_window = WindowMain(world, viewport)
 obj_descriptor = ObjDescriptor()
 
-obj_descriptor.obj_to_object("../objects/quadrado.obj", world)
-obj_descriptor.obj_to_object("../objects/triangulo.obj", world)
-obj_descriptor.obj_to_object("../objects/linha.obj", world)
-obj_descriptor.obj_to_object("../objects/pentagon.obj", world)
+obj_descriptor.obj_to_object("../objects/GreenLine.obj", world)
+obj_descriptor.obj_to_object("../objects/PurpleTriangle.obj", world)
+obj_descriptor.obj_to_object("../objects/RedSquare.obj", world)
 
 if __name__ == "__main__":
     main_window.post_init()
