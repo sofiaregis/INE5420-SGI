@@ -18,6 +18,7 @@ class Clipper:
             elif isinstance(obj, Line) and selected_algorithm == 1:
                 new_line = self.clip_line1(obj)
                 if new_line:
+                    new_line.color = obj.color
                     new_display_file.append(new_line)
             
             elif isinstance(obj, Wireframe):
