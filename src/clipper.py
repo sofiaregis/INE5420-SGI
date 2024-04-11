@@ -10,13 +10,30 @@ class Clipper:
         new_display_file = []
         for obj in display_file:
             if isinstance(obj, Point):
-                new_display_file.append(self.clip_point(window, viewport, obj))
+                new_point = self.clip_point(obj)
+                if new_point:
+                    new_display_file.append(new_point)
             elif isinstance(obj, Line):
-                new_display_file.append(self.clip_line(window, viewport, obj))
+                new_line = self.clip_line(obj)
+                if new_line:
+                    new_display_file.append(new_line)
             elif isinstance(obj, Wireframe):
-                new_display_file.append(self.clip_wireframe(window, viewport, obj))
+                new_wireframe = self.clip_wireframe(obj)
+                if new_wireframe:
+                    new_display_file.append(new_wireframe)
 
         return new_display_file
         
-    def clip_point(self, window, viewport, point):
+    def clip_point(self, point):
+        if ((point.scn_x <= 1) and (point.scn_x >= -1)) and ((point.scn_y <= 1) and (point.scn_y >= -1)):
+            return point
+        return None
+    
+    def clip_line_1(self, line):
+        pass
+
+    def clip_line_2(self, line):
+        pass
+
+    def clip_wireframe(self, wireframe):
         pass
