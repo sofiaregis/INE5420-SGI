@@ -38,7 +38,8 @@ class Clipper:
     #COHEN-SUTHERLAND
     def clip_line1(self, line):
         window = line.points[0].window
-        x_min, x_max, y_min, y_max = window.x_min, window.x_max, window.y_min, window.y_max
+        margin = 15
+        x_min, x_max, y_min, y_max = window.x_min+margin, window.x_max-margin, window.y_min+margin, window.y_max-margin
         x1, y1, x2, y2 = line.points[0].x, line.points[0].y, line.points[1].x, line.points[1].y
         code1 = self.compute_cohen_sutherland_code(x1, y1, x_min, x_max, y_min, y_max)
         code2 = self.compute_cohen_sutherland_code(x2, y2, x_min, x_max, y_min, y_max)
