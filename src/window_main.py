@@ -118,7 +118,6 @@ class WindowMain():
         cairo.restore()
 
         display_file_clipped = Clipper().clip(self.world.display_file)
-
         for object in display_file_clipped:
             object.draw(self.viewport, self.world.window, cairo)
 
