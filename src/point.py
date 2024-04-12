@@ -15,7 +15,6 @@ class Point(GraphicalObject):
         self.rgb = (0.0, 0.0, 0.0)
 
     def draw(self, viewport, window, cairo):
-        self.update_scn()
         viewport_point = viewport.viewport_transformation(self, window)
         cairo.save()
         cairo.set_source_rgb(self.color[0], self.color[1], self.color[2])

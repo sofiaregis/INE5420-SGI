@@ -9,8 +9,6 @@ class Line(GraphicalObject):
         self.rgb = (0.0, 0.0, 0.0)
 
     def draw(self, viewport, window, cairo):
-        for point in self.points:
-            point.update_scn()
         viewport_point_start = viewport.viewport_transformation(self.points[0], window)
         viewport_point_end = viewport.viewport_transformation(self.points[1], window)
         cairo.save()

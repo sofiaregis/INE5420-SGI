@@ -9,8 +9,6 @@ class Wireframe(GraphicalObject):
         self.rgb = (0.0, 0.0, 0.0)
 
     def draw(self, viewport, window, cairo):
-        for point in self.points:
-            point.update_scn()
         viewport_point_start = viewport.viewport_transformation(self.points[0], window)
         cairo.save()
         cairo.set_source_rgb(self.color[0], self.color[1], self.color[2])

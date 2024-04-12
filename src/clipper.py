@@ -11,26 +11,31 @@ class Clipper:
         selected_algorithm = 1 #TEMPORARY
         for obj in display_file:
             if isinstance(obj, Point):
+                obj.update_scn()
                 new_point = self.clip_point(obj)
                 if new_point:
                     new_display_file.append(new_point)
 
             elif isinstance(obj, Line) and selected_algorithm == 1:
+                for point in obj.points:
+                    point.update_scn()
                 new_line = self.clip_line1(obj)
                 if new_line:
-                    new_line.color = obj.color
                     new_display_file.append(new_line)
             
             elif isinstance(obj, Wireframe):
                 #new_wireframe = self.clip_wireframe(obj)
                 #if new_wireframe:
                 #    new_display_file.append(new_wireframe)
+                for point in obj.points:
+                    point.update_scn()
                 new_display_file.append(obj)
         
         return new_display_file
         
     def clip_point(self, point):
         if ((point.scn_x <= 1) and (point.scn_x >= -1)) and ((point.scn_y <= 1) and (point.scn_y >= -1)):
+            point.update_scn()
             return point
         return None
     
@@ -38,9 +43,9 @@ class Clipper:
     #COHEN-SUTHERLAND
     def clip_line1(self, line):
         window = line.points[0].window
-        margin = 15 #THIS METHOD IS NOT GOOD, and has to be changed to be proportional to window size
-        x_min, x_max, y_min, y_max = window.x_min+margin, window.x_max-margin, window.y_min+margin, window.y_max-margin
-        x1, y1, x2, y2 = line.points[0].x, line.points[0].y, line.points[1].x, line.points[1].y
+        margin = 0.05
+        x_min, x_max, y_min, y_max = -1 + margin, 1 - margin, -1 + margin, 1 - margin
+        x1, y1, x2, y2 = line.points[0].scn_x, line.points[0].scn_y, line.points[1].scn_x, line.points[1].scn_y
         code1 = self.compute_cohen_sutherland_code(x1, y1, x_min, x_max, y_min, y_max)
         code2 = self.compute_cohen_sutherland_code(x2, y2, x_min, x_max, y_min, y_max)
         accept = False
@@ -79,8 +84,11 @@ class Clipper:
                     code2 = self.compute_cohen_sutherland_code(x2, y2, x_min, x_max, y_min, y_max)
         
         if accept:
-            new_line = Line(x1, y1, x2, y2, line.points[0].window)
-            return new_line
+            line.points[0].scn_x = x1
+            line.points[0].scn_y = y1
+            line.points[1].scn_x = x2
+            line.points[1].scn_y = y2
+            return line
         else:
             return None
 
