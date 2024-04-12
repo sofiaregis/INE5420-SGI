@@ -8,6 +8,7 @@ class Wireframe(GraphicalObject):
         self.color = (0.0, 0.0, 0.0)
         self.rgb = (0.0, 0.0, 0.0)
         self.in_window = False
+        self.filled = False
 
     def draw(self, viewport, window, cairo):
         viewport_point_start = viewport.viewport_transformation(self.points[0], window)
