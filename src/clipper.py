@@ -7,7 +7,7 @@ class Clipper:
         self.margin = 0.05
 
     def clip(self, display_file):
-        selected_algorithm = 1 #TEMPORARY
+        selected_algorithm = 2 #TEMPORARY
         for obj in display_file:
             if isinstance(obj, Point):
                 obj.update_scn()
@@ -31,7 +31,8 @@ class Clipper:
     ###################################################################################################
     #COHEN-SUTHERLAND
     def clip_line1(self, line):
-        x_min, x_max, y_min, y_max = -1 + self.margin, 1 - self.margin, -1 + self.margin, 1 - self.margin
+        x_min = y_min = -1 + self.margin
+        x_max = y_max = 1 - self.margin
         x1, y1, x2, y2 = line.points[0].scn_x, line.points[0].scn_y, line.points[1].scn_x, line.points[1].scn_y
         code1 = self.compute_cohen_sutherland_code(x1, y1, x_min, x_max, y_min, y_max)
         code2 = self.compute_cohen_sutherland_code(x2, y2, x_min, x_max, y_min, y_max)
@@ -93,17 +94,22 @@ class Clipper:
 
     #LIANG-BARSKY
     def clip_line_2(self, line):
-        x_min, x_max, y_min, y_max = -1 + self.margin, 1 - self.margin, -1 + self.margin, 1 - self.margin
+        x_min = y_min = -1 + self.margin
+        x_max = y_max = 1 - self.margin
         x1, y1, x2, y2 = line.points[0].scn_x, line.points[0].scn_y, line.points[1].scn_x, line.points[1].scn_y
         dx, dy = x2 - x1, y2 - y1
         p = [-dx, dx, -dy, dy]
         q = [x1 - x_min, x_max - x1, y1 - y_min, y_max - y1]
         u1, u2 = 0, 1
 
+        if x_min < x1 < x_max and y_min < y1 < y_max and x_min < x2 < x_max and y_min < y2 < y_max:
+            line.in_window = True
+            return
+
         for i in range(4):
             if p[i] == 0:
                 if q[i] < 0:
-                    break
+                    break                    
             else:
                 r = q[i] / p[i]
                 if p[i] < 0:
@@ -111,17 +117,22 @@ class Clipper:
                 else:
                     u2 = min(u2, r)
         
-        if u1 < u2:
-            x1 = x1 + u1 * dx
-            y1 = y1 + u1 * dy
-            x2 = x1 + u2 * dx
-            y2 = y1 + u2 * dy
-            line.points[0].scn_x = x1
-            line.points[0].scn_y = y1
-            line.points[1].scn_x = x2
-            line.points[1].scn_y = y2
-            line.in_window = True
-
+        if u1 > u2:  # Reject the line if u1 > u2
+            return
+        
+        # Apply Liang-Barsky clipping
+        x1_clip = x1 + u1 * dx
+        y1_clip = y1 + u1 * dy
+        x2_clip = x1 + u2 * dx
+        y2_clip = y1 + u2 * dy
+        
+        line.points[0].scn_x = x1_clip
+        line.points[0].scn_y = y1_clip
+        line.points[1].scn_x = x2_clip
+        line.points[1].scn_y = y2_clip
+        
+        print(f"Line clipped again, new points are: ({x1_clip}, {y1_clip}) and ({x2_clip}, {y2_clip}).")
+        line.in_window = True
 ###################################################################################################
 
     def clip_wireframe(self, wireframe):

@@ -115,6 +115,17 @@ class WindowMain():
         cairo.line_to(0, self.viewport.yvpmax)
         cairo.line_to(0, 0)
         cairo.fill()
+
+        cairo.set_source_rgb(0, 0, 0)
+        x_margin = self.viewport.xvpmax*(Clipper().margin/2)
+        y_margin = self.viewport.yvpmax*(Clipper().margin/2)
+        cairo.move_to(x_margin, y_margin)
+        cairo.line_to(self.viewport.xvpmax - x_margin, y_margin)
+        cairo.line_to(self.viewport.xvpmax - x_margin, self.viewport.yvpmax - y_margin)
+        cairo.line_to(x_margin, self.viewport.yvpmax - y_margin)
+        cairo.line_to(x_margin, y_margin)
+        cairo.stroke()
+
         cairo.restore()
 
         Clipper().clip(self.world.display_file)
