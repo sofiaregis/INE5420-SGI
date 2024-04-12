@@ -5,9 +5,9 @@ from wireframe import Wireframe
 class Clipper:
     def __init__(self):
         self.margin = 0.05
+        self.selected_algorithm = 1
 
     def clip(self, display_file):
-        selected_algorithm = 2 #TEMPORARY
         for obj in display_file:
             if isinstance(obj, Point):
                 obj.update_scn()
@@ -16,7 +16,7 @@ class Clipper:
             elif isinstance(obj, Line):
                 for point in obj.points:
                     point.update_scn()
-                self.clip_line1(obj) if selected_algorithm == 1 else self.clip_line_2(obj)
+                self.clip_line1(obj) if self.selected_algorithm == 1 else self.clip_line_2(obj)
 
             elif isinstance(obj, Wireframe):
                 for point in obj.points:
@@ -130,8 +130,6 @@ class Clipper:
         line.points[0].scn_y = y1_clip
         line.points[1].scn_x = x2_clip
         line.points[1].scn_y = y2_clip
-        
-        print(f"Line clipped again, new points are: ({x1_clip}, {y1_clip}) and ({x2_clip}, {y2_clip}).")
         line.in_window = True
 ###################################################################################################
 
