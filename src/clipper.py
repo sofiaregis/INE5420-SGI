@@ -4,7 +4,7 @@ from wireframe import Wireframe
 
 class Clipper:
     def __init__(self):
-        pass
+        self.margin = 0.05
 
     def clip(self, display_file):
         selected_algorithm = 1 #TEMPORARY
@@ -31,9 +31,7 @@ class Clipper:
     ###################################################################################################
     #COHEN-SUTHERLAND
     def clip_line1(self, line):
-        window = line.points[0].window
-        margin = 0.05
-        x_min, x_max, y_min, y_max = -1 + margin, 1 - margin, -1 + margin, 1 - margin
+        x_min, x_max, y_min, y_max = -1 + self.margin, 1 - self.margin, -1 + self.margin, 1 - self.margin
         x1, y1, x2, y2 = line.points[0].scn_x, line.points[0].scn_y, line.points[1].scn_x, line.points[1].scn_y
         code1 = self.compute_cohen_sutherland_code(x1, y1, x_min, x_max, y_min, y_max)
         code2 = self.compute_cohen_sutherland_code(x2, y2, x_min, x_max, y_min, y_max)
@@ -93,8 +91,38 @@ class Clipper:
 
     ###################################################################################################
 
+    #LIANG-BARSKY
     def clip_line_2(self, line):
-        pass
+        x_min, x_max, y_min, y_max = -1 + self.margin, 1 - self.margin, -1 + self.margin, 1 - self.margin
+        x1, y1, x2, y2 = line.points[0].scn_x, line.points[0].scn_y, line.points[1].scn_x, line.points[1].scn_y
+        dx, dy = x2 - x1, y2 - y1
+        p = [-dx, dx, -dy, dy]
+        q = [x1 - x_min, x_max - x1, y1 - y_min, y_max - y1]
+        u1, u2 = 0, 1
+
+        for i in range(4):
+            if p[i] == 0:
+                if q[i] < 0:
+                    break
+            else:
+                r = q[i] / p[i]
+                if p[i] < 0:
+                    u1 = max(u1, r)
+                else:
+                    u2 = min(u2, r)
+        
+        if u1 < u2:
+            x1 = x1 + u1 * dx
+            y1 = y1 + u1 * dy
+            x2 = x1 + u2 * dx
+            y2 = y1 + u2 * dy
+            line.points[0].scn_x = x1
+            line.points[0].scn_y = y1
+            line.points[1].scn_x = x2
+            line.points[1].scn_y = y2
+            line.in_window = True
+
+###################################################################################################
 
     def clip_wireframe(self, wireframe):
         wireframe.in_window = True
