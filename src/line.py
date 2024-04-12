@@ -7,6 +7,7 @@ class Line(GraphicalObject):
         self.points = (Point(x1, y1, window), Point(x2, y2, window))
         self.color = (0.0, 0.0, 0.0)
         self.rgb = (0.0, 0.0, 0.0)
+        self.in_window = False
 
     def draw(self, viewport, window, cairo):
         viewport_point_start = viewport.viewport_transformation(self.points[0], window)

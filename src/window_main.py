@@ -117,9 +117,11 @@ class WindowMain():
         cairo.fill()
         cairo.restore()
 
-        display_file_clipped = Clipper().clip(self.world.display_file)
-        for object in display_file_clipped:
-            object.draw(self.viewport, self.world.window, cairo)
+        Clipper().clip(self.world.display_file)
+        for object in self.world.display_file:
+            if object.in_window:
+                object.draw(self.viewport, self.world.window, cairo)
+            object.in_window = False
 
     def press_up_button(self, widget, data=None):
         step = int(self.step_entry.get_text())

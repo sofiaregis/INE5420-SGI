@@ -13,6 +13,7 @@ class Point(GraphicalObject):
         self.name = ""
         self.color = (0.0, 0.0, 0.0)
         self.rgb = (0.0, 0.0, 0.0)
+        self.in_window = False
 
     def draw(self, viewport, window, cairo):
         viewport_point = viewport.viewport_transformation(self, window)

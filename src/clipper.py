@@ -7,38 +7,27 @@ class Clipper:
         pass
 
     def clip(self, display_file):
-        new_display_file = []
         selected_algorithm = 1 #TEMPORARY
         for obj in display_file:
             if isinstance(obj, Point):
                 obj.update_scn()
-                new_point = self.clip_point(obj)
-                if new_point:
-                    new_display_file.append(new_point)
+                self.clip_point(obj)
 
-            elif isinstance(obj, Line) and selected_algorithm == 1:
+            elif isinstance(obj, Line):
                 for point in obj.points:
                     point.update_scn()
-                new_line = self.clip_line1(obj)
-                if new_line:
-                    new_display_file.append(new_line)
-            
+                self.clip_line1(obj) if selected_algorithm == 1 else self.clip_line_2(obj)
+
             elif isinstance(obj, Wireframe):
-                #new_wireframe = self.clip_wireframe(obj)
-                #if new_wireframe:
-                #    new_display_file.append(new_wireframe)
                 for point in obj.points:
                     point.update_scn()
-                new_display_file.append(obj)
-        
-        return new_display_file
+                self.clip_wireframe(obj)
         
     def clip_point(self, point):
         if ((point.scn_x <= 1) and (point.scn_x >= -1)) and ((point.scn_y <= 1) and (point.scn_y >= -1)):
             point.update_scn()
-            return point
-        return None
-    
+            point.in_window = True
+        
     ###################################################################################################
     #COHEN-SUTHERLAND
     def clip_line1(self, line):
@@ -88,9 +77,7 @@ class Clipper:
             line.points[0].scn_y = y1
             line.points[1].scn_x = x2
             line.points[1].scn_y = y2
-            return line
-        else:
-            return None
+            line.in_window = True
 
     def compute_cohen_sutherland_code(self, x, y, x_min, x_max, y_min, y_max):
         code = 0
@@ -110,4 +97,4 @@ class Clipper:
         pass
 
     def clip_wireframe(self, wireframe):
-        pass
+        wireframe.in_window = True
