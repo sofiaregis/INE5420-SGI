@@ -9,7 +9,6 @@ class Point(GraphicalObject):
         self.y = y
         self.scn_x = 0
         self.scn_y = 0
-        self.update_scn()
         self.name = ""
         self.color = (0.0, 0.0, 0.0)
         self.rgb = (0.0, 0.0, 0.0)

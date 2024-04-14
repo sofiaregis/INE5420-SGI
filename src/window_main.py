@@ -117,6 +117,15 @@ class WindowMain():
         cairo.line_to(0, 0)
         cairo.fill()
 
+
+        cairo.restore()
+
+        self.clipper.clip(self.world.display_file, self.world.window)
+        for object in self.world.display_file:
+            if object.in_window:
+                object.draw(self.viewport, self.world.window, cairo)
+            object.in_window = False
+        cairo.save()
         cairo.set_source_rgb(0, 0, 0)
         x_margin = self.viewport.xvpmax*(self.clipper.margin/2)
         y_margin = self.viewport.yvpmax*(self.clipper.margin/2)
@@ -126,14 +135,7 @@ class WindowMain():
         cairo.line_to(x_margin, self.viewport.yvpmax - y_margin)
         cairo.line_to(x_margin, y_margin)
         cairo.stroke()
-
         cairo.restore()
-
-        self.clipper.clip(self.world.display_file)
-        for object in self.world.display_file:
-            if object.in_window:
-                object.draw(self.viewport, self.world.window, cairo)
-            object.in_window = False
 
     def press_up_button(self, widget, data=None):
         step = int(self.step_entry.get_text())
