@@ -16,6 +16,7 @@ class WindowMain():
     def __init__(self, world, viewport):
         self.world = world
         self.viewport = viewport
+        self.clipper = Clipper()
         self.transformator = Transformator(self.world)
         self.obj_descriptor = ObjDescriptor()
 
@@ -115,11 +116,26 @@ class WindowMain():
         cairo.line_to(0, self.viewport.yvpmax)
         cairo.line_to(0, 0)
         cairo.fill()
+
+
         cairo.restore()
 
-        display_file_clipped = Clipper().clip(self.world.display_file)
-        for object in display_file_clipped:
-            object.draw(self.viewport, self.world.window, cairo)
+        self.clipper.clip(self.world.display_file, self.world.window)
+        for object in self.world.display_file:
+            if object.in_window:
+                object.draw(self.viewport, self.world.window, cairo)
+            object.in_window = False
+        cairo.save()
+        cairo.set_source_rgb(0, 0, 0)
+        x_margin = self.viewport.xvpmax*(self.clipper.margin/2)
+        y_margin = self.viewport.yvpmax*(self.clipper.margin/2)
+        cairo.move_to(x_margin, y_margin)
+        cairo.line_to(self.viewport.xvpmax - x_margin, y_margin)
+        cairo.line_to(self.viewport.xvpmax - x_margin, self.viewport.yvpmax - y_margin)
+        cairo.line_to(x_margin, self.viewport.yvpmax - y_margin)
+        cairo.line_to(x_margin, y_margin)
+        cairo.stroke()
+        cairo.restore()
 
     def press_up_button(self, widget, data=None):
         step = int(self.step_entry.get_text())
@@ -255,6 +271,15 @@ class WindowMain():
                     pass         
                 angle_entry.set_text("")
                 self.viewport_drawing_area.queue_draw()
+
+    def line_clipping_input(self, widget, data=None):
+        radio_cohen_sutherland = self.builder.get_object("RadioCohenSutherland")
+        radio_liang_barsky = self.builder.get_object("RadioLiangBarsky")
+        if radio_cohen_sutherland.get_active():
+            self.clipper.selected_algorithm = 1
+        elif radio_liang_barsky.get_active():
+            self.clipper.selected_algorithm = 2
+        self.viewport_drawing_area.queue_draw()
 
     def main(self):
         Gtk.main()

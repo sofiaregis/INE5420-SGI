@@ -63,6 +63,7 @@ class ObjectWindow:
             self.main_window.world.add_object(line)
 
         # Create new wireframe
+        filled = self.builder.get_object("WireframeFilledRadio").get_active()
         if self.wireframe_points != [] and None not in [input["WireframeNameInput"], input["WireframeColorInput"]]:
             new_wireframe_points = []
             for point in self.wireframe_points:
@@ -70,7 +71,7 @@ class ObjectWindow:
             wireframe = Wireframe(new_wireframe_points)
             wireframe.name = input["WireframeNameInput"]
             wireframe.color = (input["WireframeColorInput"].red, input["WireframeColorInput"].green, input["WireframeColorInput"].blue)
-            wireframe.color = (input["WireframeColorInput"].red, input["WireframeColorInput"].green, input["WireframeColorInput"].blue)
+            wireframe.filled = filled
             self.main_window.world.add_object(wireframe)
             self.wireframe_points_liststore.clear()
             self.wireframe_points = []
