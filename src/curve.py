@@ -26,17 +26,17 @@ class Curve(GraphicalObject):
     def calculate_bezier_curve(self, p1, p2, p3, p4, window):
         curve_points = []
 
-        Mb = np.array(( [-1, 3, -3, 1],
+        mb = np.array(( [-1, 3, -3, 1],
 						[3, -6,  3, 0],
 						[-3, 3,  0, 0],
 						[1,  0,  0, 0]), dtype = float)
 
-        Gbx = np.array(([float(p1.x)],
+        gbx = np.array(([float(p1.x)],
 						[float(p2.x)],
 						[float(p3.x)],
 						[float(p4.x)]), dtype = float)
 
-        Gby = np.array(([float(p1.y)],
+        gby = np.array(([float(p1.y)],
 						[float(p2.y)],
 						[float(p3.y)],
 						[float(p4.y)]), dtype = float)
@@ -47,10 +47,10 @@ class Curve(GraphicalObject):
         for i in np.arange(0.0, 1.0+step, step):
             t2 = i*i
             t3 = t2*i
-            Mt = np.array(([t3, t2, i, 1]), dtype = float)
-            MtMb = np.dot(Mt, Mb)
-            curve_point_x = np.dot(MtMb, Gbx)
-            curve_point_y = np.dot(MtMb, Gby)
+            mt = np.array(([t3, t2, i, 1]), dtype = float)
+            mtmb = np.dot(mt, mb)
+            curve_point_x = np.dot(mtmb, gbx)
+            curve_point_y = np.dot(mtmb, gby)
             curve_points.append(Point(curve_point_x, curve_point_y, window))
 
         curve_points.append(Point(p4.x, p4.y, window)) 
