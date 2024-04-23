@@ -1,6 +1,7 @@
 from point import Point
 from line import Line
 from wireframe import Wireframe
+from curve import Curve
 from window import Window
 import copy
 import numpy as np
@@ -25,11 +26,20 @@ class Clipper:
                 for point in obj.points:
                     point.update_scn()
                 self.clip_wireframe(obj, window)
+            
+            elif isinstance(obj, Curve):
+                obj.calculate_points(window)
+                for point in obj.curve_points:
+                    point.update_scn()
+                    self.clip_point(point)
+                    if point.in_window:
+                        obj.in_window = True
         
     def clip_point(self, point):
-        if ((point.scn_x <= 1) and (point.scn_x >= -1)) and ((point.scn_y <= 1) and (point.scn_y >= -1)):
-            point.update_scn()
+        if ((point.scn_x <= 1-self.margin) and (point.scn_x >= -1+self.margin)) and ((point.scn_y <= 1-self.margin) and (point.scn_y >= -1+self.margin)):
             point.in_window = True
+        else:
+            point.in_window = False
         
     ###################################################################################################
     #COHEN-SUTHERLAND

@@ -15,6 +15,7 @@ obj_descriptor = ObjDescriptor()
 obj_descriptor.obj_to_object("../objects/GreenLine.obj", world)
 obj_descriptor.obj_to_object("../objects/PurpleTriangle.obj", world)
 obj_descriptor.obj_to_object("../objects/RedSquare.obj", world)
+obj_descriptor.obj_to_object("../objects/BlueParabola.obj", world)
 
 if __name__ == "__main__":
     main_window.post_init()

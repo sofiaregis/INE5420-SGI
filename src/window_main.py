@@ -59,6 +59,9 @@ class WindowMain():
 
     def add_point_wireframe(self, widget):
         self.object_window.add_point_wireframe(widget)
+    
+    def add_point_bezier(self, widget):
+        self.object_window.add_point_bezier(widget)
 
     def close_create_object(self, widget):
         self.object_window.close(widget)
@@ -99,7 +102,7 @@ class WindowMain():
 
     def create_treeview_items(self):
         self.objects_liststore.clear()
-        objects_dict = {"Point": 0, "Line": 0, "Wireframe": 0}
+        objects_dict = {"Point": 0, "Line": 0, "Wireframe": 0, "Curve": 0}
 
         for i in range(len(self.world.display_file)):
             object_class = self.world.display_file[i].__class__.__name__
@@ -136,6 +139,7 @@ class WindowMain():
         cairo.line_to(x_margin, y_margin)
         cairo.stroke()
         cairo.restore()
+        self.update_log(self.selected_object_index)
 
     def press_up_button(self, widget, data=None):
         step = int(self.step_entry.get_text())

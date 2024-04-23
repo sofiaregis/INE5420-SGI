@@ -1,6 +1,7 @@
 from point import Point
 from line import Line
 from wireframe import Wireframe
+from curve import Curve
 
 class ObjDescriptor:
     def __init__(self) -> None:
@@ -28,7 +29,14 @@ class ObjDescriptor:
             for point in object.points:
                 f.write(str(point.x)+", "+str(point.y)+"\n")
             f.close()
-
+        if isinstance(object, Curve):
+            f.write("Curve\n")
+            f.write(object.name+"\n")
+            f.write(str(object.rgb[0])+", "+str(object.rgb[1])+", "+str(object.rgb[2])+"\n")
+            for point in object.points:
+                f.write(str(point.x)+", "+str(point.y)+"\n")
+            f.close()
+    
     def obj_to_object(self, file, world):
         f = open(file, "r")
         type = f.readline().strip()
@@ -61,3 +69,13 @@ class ObjDescriptor:
             wireframe.color = rgb
             wireframe.rgb = rgb
             world.add_object(wireframe)
+        elif type == "Curve":
+            points = []
+            for line in f:
+                x, y = line.strip().split(", ")
+                points.append(Point(float(x), float(y), world.window))
+            curve = Curve(points)
+            curve.name = name
+            curve.color = rgb
+            curve.rgb = rgb
+            world.add_object(curve)
