@@ -1,6 +1,7 @@
 from point import Point
 from line import Line
 from wireframe import Wireframe
+from curve import Curve
 import numpy as np
 
 # THIS CLASSE'S METHODS DO NOT RETURN ANYTHING, THEY JUST CHANGE THE OBJECTS PASSED AS ARGUMENTS
@@ -65,7 +66,7 @@ class Transformator:
     def move_object(self, n_dimensions, object, vector):
         if isinstance(object, Point):
             self.move_point(n_dimensions, object, vector)
-        elif isinstance(object, Line) or isinstance(object, Wireframe):
+        elif isinstance(object, Line) or isinstance(object, Wireframe) or isinstance(object, Curve):
             new_points = []
             for point in object.points:
                 self.move_point(n_dimensions, point, vector)

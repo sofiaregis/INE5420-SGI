@@ -2,6 +2,7 @@ from viewport import Viewport
 from point import Point
 from line import Line
 from wireframe import Wireframe
+from curve import Curve
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -14,15 +15,27 @@ class ObjectWindow:
 
         # Set create object window and Wireframe Treeview
         self.builder = builder
+        self.builder.connect_signals(self)
         self.create_object_dialog = self.builder.get_object("CreateObjectDialog")
         self.wireframe_points = []
         self.wireframe_points_liststore = Gtk.ListStore(int, int)
         self.wireframe_points_treeview = self.builder.get_object("WireframeTreelistPoints")
         self.wireframe_points_treeview.set_model(self.wireframe_points_liststore)
+
+        self.bezier_points = []
+        self.bezier_points_liststore = Gtk.ListStore(int, int)
+        self.bezier_points_treeview = self.builder.get_object("BezierTreelistPoints")
+        self.bezier_points_treeview.set_model(self.bezier_points_liststore)
+
         for i, column_title in enumerate(["X", "Y"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
             self.wireframe_points_treeview.append_column(column)
+
+        for i, column_title in enumerate(["X", "Y"]):
+            renderer = Gtk.CellRendererText()
+            column = Gtk.TreeViewColumn(column_title, renderer, text=i)
+            self.bezier_points_treeview.append_column(column)
 
     def open(self, widget):
         self.create_object_dialog.show_all()
@@ -30,8 +43,9 @@ class ObjectWindow:
     def confirm(self, widget):
         input = {"PointXInput":None, "PointYInput":None, "LineX1Input":None, "LineY1Input":None,
                  "LineX2Input":None, "LineY2Input":None, "WireframeXInput":None, "WireframeYInput":None,
-                 "PointNameInput":None, "PointColorInput":None, "LineNameInput":None, "LineColorInput":None,
-                 "WireframeNameInput":None, "WireframeColorInput":None}
+                 "WireframeNameInput":None, "WireframeColorInput":None, "PointNameInput":None, "PointColorInput":None, 
+                 "LineNameInput":None, "LineColorInput":None, "BezierXInput":None, "BezierYInput":None,
+                 "BezierNameInput":None, "BezierColorInput":None}
         
         # Get all input values
         for key in input.keys():
@@ -71,10 +85,25 @@ class ObjectWindow:
             wireframe = Wireframe(new_wireframe_points)
             wireframe.name = input["WireframeNameInput"]
             wireframe.color = (input["WireframeColorInput"].red, input["WireframeColorInput"].green, input["WireframeColorInput"].blue)
+            wireframe.rgb = (input["WireframeColorInput"].red, input["WireframeColorInput"].green, input["WireframeColorInput"].blue)
             wireframe.filled = filled
             self.main_window.world.add_object(wireframe)
             self.wireframe_points_liststore.clear()
-            self.wireframe_points = []
+            self.wireframe_points = []       
+
+        # Create new bezier curve
+        if self.bezier_points != [] and None not in [input["BezierNameInput"], input["BezierColorInput"]]:
+            new_bezier_points = []
+            for point in self.bezier_points:
+                new_bezier_points.append(Point(point[0], point[1], self.window))
+            bezier_curve = Curve(new_bezier_points)
+            bezier_curve.name = input["BezierNameInput"]
+            bezier_curve.color = (input["BezierColorInput"].red, input["BezierColorInput"].green, input["BezierColorInput"].blue)
+            bezier_curve.rgb = (input["BezierColorInput"].red, input["BezierColorInput"].green, input["BezierColorInput"].blue)
+            self.main_window.world.add_object(bezier_curve)
+            self.bezier_points_liststore.clear()
+            self.bezier_points = [] 
+      
         self.close(widget)
         self.main_window.create_treeview_items()
 
@@ -86,6 +115,17 @@ class ObjectWindow:
         if x != "" and y != "":
             self.wireframe_points.append((int(x), int(y)))
             self.wireframe_points_liststore.append(self.wireframe_points[-1])
+            x_entry.set_text("")
+            y_entry.set_text("")
+
+    def add_point_bezier(self, widget):
+        x_entry = self.builder.get_object("BezierXInput")
+        y_entry = self.builder.get_object("BezierYInput")
+        x = x_entry.get_text()
+        y = y_entry.get_text()
+        if x != "" and y != "":
+            self.bezier_points.append((int(x), int(y)))
+            self.bezier_points_liststore.append(self.bezier_points[-1])
             x_entry.set_text("")
             y_entry.set_text("")
 
