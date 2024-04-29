@@ -10,17 +10,21 @@ class Curve(GraphicalObject):
         self.color = (0.0, 0.0, 0.0)
         self.rgb = (0.0, 0.0, 0.0)
         self.in_window = False
+        self.is_bezier = True
 
     def calculate_points(self, window):
         calculated_points = []
-        for i in range(0, len(self.points), 3):
-            if i == len(self.points) - 1:
-                break
-            if i == 0:
-                calculated_points.extend(self.calculate_bezier_curve(self.points[i], self.points[i+1], self.points[i+2], self.points[i+3], window))
-            if i > 0:
-                calculated_points.extend(self.calculate_bezier_curve(self.points[i], self.points[i+1], self.points[i+2], self.points[i+3], window)[1:])
-                   
+        if self.is_bezier:
+            for i in range(0, len(self.points), 3):
+                if i == len(self.points) - 1:
+                    break
+                if i == 0:
+                    calculated_points.extend(self.calculate_bezier_curve(self.points[i], self.points[i+1], self.points[i+2], self.points[i+3], window))
+                if i > 0:
+                    calculated_points.extend(self.calculate_bezier_curve(self.points[i], self.points[i+1], self.points[i+2], self.points[i+3], window)[1:])
+        else:
+            calculated_points = self.calculate_b_spline_curve(window)
+        
         self.curve_points = calculated_points
 
     def calculate_bezier_curve(self, p1, p2, p3, p4, window):
@@ -55,6 +59,48 @@ class Curve(GraphicalObject):
 
         curve_points.append(Point(p4.x, p4.y, window)) 
         
+        return curve_points
+
+    def calculate_b_spline_curve(self, window):
+        curve_points = []
+        delta = 0.001 # step
+        n = 1 / delta
+        e_delta = np.array(([0, 0, 0, 1],                    # variation constants
+                            [delta**3, delta**2, delta, 0],
+                            [6*delta**3, 2*delta**2, 0, 0],
+                            [6*delta**3, 0, 0, 0]), dtype = float)
+        mbs = np.array(([-1/6, 3/6, -3/6, 1/6],              # geometry matrix for b-spline
+                        [3/6, -6/6, 3/6, 0],
+                        [-3/6, 0, 3/6, 0],
+                        [1/6, 4/6, 1/6, 0]), dtype = float)
+        i = 0
+        for i in range(0, len(self.points) - 3):
+            gxbs = np.array(([self.points[i].x, self.points[i+1].x, self.points[i+2].x, self.points[i+3].x]), dtype = float)
+            gybs = np.array(([self.points[i].y, self.points[i+1].y, self.points[i+2].y, self.points[i+3].y]), dtype = float)
+            cxbs = np.dot(mbs, gxbs)
+            cybs = np.dot(mbs, gybs)
+            dxbs = np.dot(e_delta, cxbs)
+            dybs = np.dot(e_delta, cybs)
+        
+            curve_points.extend(self.drawcurvefwddiff(int(n), dxbs[0], dxbs[1], dxbs[2], dxbs[3], dybs[0], dybs[1], dybs[2], dybs[3], window))
+
+        return curve_points
+
+    def drawcurvefwddiff(self, n, x, xd1, xd2, xd3, y, yd1, yd2, yd3, window):
+        curve_points = []
+        old_x = x
+        old_y = y
+        for i in range(n):
+            x = x + xd1 
+            xd1 = xd1 + xd2
+            xd2 = xd2 + xd3
+            y = y + yd1
+            yd1 = yd1 + yd2
+            yd2 = yd2 + yd3
+            curve_points.append(Point(old_x, old_y, window))
+            curve_points.append(Point(x, y, window))
+            old_x = x
+            old_y = y
         return curve_points
 
     def draw(self, viewport, window, cairo):

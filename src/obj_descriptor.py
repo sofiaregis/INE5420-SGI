@@ -76,6 +76,8 @@ class ObjDescriptor:
                 points.append(Point(float(x), float(y), world.window))
             curve = Curve(points)
             curve.name = name
+            if "B-Spline" in name:
+                curve.is_bezier = False
             curve.color = rgb
             curve.rgb = rgb
             world.add_object(curve)

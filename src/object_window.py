@@ -41,6 +41,7 @@ class ObjectWindow:
         self.create_object_dialog.show_all()
 
     def confirm(self, widget):
+        success = False
         input = {"PointXInput":None, "PointYInput":None, "LineX1Input":None, "LineY1Input":None,
                  "LineX2Input":None, "LineY2Input":None, "WireframeXInput":None, "WireframeYInput":None,
                  "WireframeNameInput":None, "WireframeColorInput":None, "PointNameInput":None, "PointColorInput":None, 
@@ -67,6 +68,7 @@ class ObjectWindow:
             point.color = (input["PointColorInput"].red, input["PointColorInput"].green, input["PointColorInput"].blue)
             point.rgb = (input["PointColorInput"].red, input["PointColorInput"].green, input["PointColorInput"].blue)
             self.main_window.world.add_object(point)
+            success = True
         
         # Create new line
         elif None not in [input["LineX1Input"], input["LineY1Input"], input["LineX2Input"], input["LineY2Input"], input["LineNameInput"], input["LineColorInput"]]:
@@ -75,10 +77,11 @@ class ObjectWindow:
             line.color = (input["LineColorInput"].red, input["LineColorInput"].green, input["LineColorInput"].blue)
             line.rgb = (input["LineColorInput"].red, input["LineColorInput"].green, input["LineColorInput"].blue)
             self.main_window.world.add_object(line)
+            success = True
 
         # Create new wireframe
         filled = self.builder.get_object("WireframeFilledRadio").get_active()
-        if self.wireframe_points != [] and None not in [input["WireframeNameInput"], input["WireframeColorInput"]]:
+        if len(self.wireframe_points) >= 3 and None not in [input["WireframeNameInput"], input["WireframeColorInput"]]:
             new_wireframe_points = []
             for point in self.wireframe_points:
                 new_wireframe_points.append(Point(point[0], point[1], self.window))
@@ -90,9 +93,11 @@ class ObjectWindow:
             self.main_window.world.add_object(wireframe)
             self.wireframe_points_liststore.clear()
             self.wireframe_points = []       
+            success = True
 
-        # Create new bezier curve
-        if self.bezier_points != [] and None not in [input["BezierNameInput"], input["BezierColorInput"]]:
+        # Create new curve
+        if len(self.bezier_points) >= 4 and None not in [input["BezierNameInput"], input["BezierColorInput"]]:
+            is_bezier = self.builder.get_object("CurveBezierRadio").get_active()
             new_bezier_points = []
             for point in self.bezier_points:
                 new_bezier_points.append(Point(point[0], point[1], self.window))
@@ -100,12 +105,19 @@ class ObjectWindow:
             bezier_curve.name = input["BezierNameInput"]
             bezier_curve.color = (input["BezierColorInput"].red, input["BezierColorInput"].green, input["BezierColorInput"].blue)
             bezier_curve.rgb = (input["BezierColorInput"].red, input["BezierColorInput"].green, input["BezierColorInput"].blue)
+            bezier_curve.is_bezier = is_bezier
             self.main_window.world.add_object(bezier_curve)
             self.bezier_points_liststore.clear()
             self.bezier_points = [] 
-      
-        self.close(widget)
-        self.main_window.create_treeview_items()
+            success = True
+
+        if success:
+            self.close(widget)
+            self.main_window.create_treeview_items()
+        else:
+            dialog = Gtk.MessageDialog(parent=self.create_object_dialog, flags=0, message_type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK, text="Invalid input")
+            dialog.run()
+            dialog.destroy()
 
     def add_point_wireframe(self, widget):
         x_entry = self.builder.get_object("WireframeXInput")
@@ -134,3 +146,7 @@ class ObjectWindow:
         create_object_inputs = ["PointXInput", "PointYInput", "LineX1Input", "LineY1Input", "LineX2Input", "LineY2Input", "WireframeXInput", "WireframeYInput"]
         for i in range(len(create_object_inputs)):
             self.builder.get_object(create_object_inputs[i]).set_text("")
+        self.wireframe_points_liststore.clear()
+        self.wireframe_points = []       
+        self.bezier_points_liststore.clear()
+        self.bezier_points = [] 
