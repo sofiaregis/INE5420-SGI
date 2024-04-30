@@ -33,6 +33,7 @@ class ObjDescriptor:
             f.write("Curve\n")
             f.write(object.name+"\n")
             f.write(str(object.rgb[0])+", "+str(object.rgb[1])+", "+str(object.rgb[2])+"\n")
+            f.write(str(object.is_bezier)+"\n")
             for point in object.points:
                 f.write(str(point.x)+", "+str(point.y)+"\n")
             f.close()
@@ -70,14 +71,14 @@ class ObjDescriptor:
             wireframe.rgb = rgb
             world.add_object(wireframe)
         elif type == "Curve":
+            is_bezier = f.readline().strip() == "True"
             points = []
             for line in f:
                 x, y = line.strip().split(", ")
                 points.append(Point(float(x), float(y), world.window))
             curve = Curve(points)
             curve.name = name
-            if "B-Spline" in name:
-                curve.is_bezier = False
             curve.color = rgb
             curve.rgb = rgb
+            curve.is_bezier = is_bezier
             world.add_object(curve)
