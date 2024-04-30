@@ -26,6 +26,7 @@ class ObjDescriptor:
             f.write("Wireframe\n")
             f.write(object.name+"\n")
             f.write(str(object.rgb[0])+", "+str(object.rgb[1])+", "+str(object.rgb[2])+"\n")
+            f.write(str(object.filled))
             for point in object.points:
                 f.write(str(point.x)+", "+str(point.y)+"\n")
             f.close()
@@ -61,6 +62,7 @@ class ObjDescriptor:
             line.rgb = rgb
             world.add_object(line)
         elif type == "Wireframe":
+            filled = f.readline().strip() == "True"
             points = []
             for line in f:
                 x, y = line.strip().split(", ")
@@ -69,6 +71,7 @@ class ObjDescriptor:
             wireframe.name = name
             wireframe.color = rgb
             wireframe.rgb = rgb
+            wireframe.filled = filled
             world.add_object(wireframe)
         elif type == "Curve":
             is_bezier = f.readline().strip() == "True"
