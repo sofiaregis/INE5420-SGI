@@ -18,19 +18,6 @@ class Wireframe(GraphicalObject):
 
 
         if self.filled:
-            #for i in range(len(self.clipped_points)):
-            #    viewport_point_start = viewport.viewport_transformation(self.clipped_points[i], window)
-            #    cairo.move_to(viewport_point_start.x, viewport_point_start.y)
-            #    if not (i == len(self.clipped_points) - 1):
-            #        viewport_point_end = viewport.viewport_transformation(self.clipped_points[i+1], window)
-            #        cairo.line_to(viewport_point_end.x, viewport_point_end.y)
-            #        #cairo.stroke()
-            #    else:
-            #        viewport_point_end = viewport.viewport_transformation(self.clipped_points[0], window)
-            #        #cairo.move_to(viewport_point_start.x, viewport_point_start.y)
-            #        cairo.line_to(viewport_point_end.x, viewport_point_end.y)
-            #        #cairo.stroke()
-            #        cairo.fill()
             first = viewport.viewport_transformation(self.clipped_points[0], window)
             cairo.move_to(first.x, first.y)
             for i in range(len(self.clipped_points)):
@@ -40,8 +27,6 @@ class Wireframe(GraphicalObject):
                 else:
                     cairo.line_to(first.x, first.y)
                     cairo.fill()
-                
-
         else:
             for i in range(len(self.clipped_points)):
                 viewport_point_start = viewport.viewport_transformation(self.clipped_points[i], window)
