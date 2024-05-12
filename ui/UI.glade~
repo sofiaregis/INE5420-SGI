@@ -738,6 +738,305 @@
                     <property name="tab-fill">False</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkFixed">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="width-request">47</property>
+                        <property name="height-request">20</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">x_start</property>
+                        <attributes>
+                          <attribute name="style" value="normal"/>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">15</property>
+                        <property name="y">51</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="width-request">47</property>
+                        <property name="height-request">20</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">y_start</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">15</property>
+                        <property name="y">89</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="Wireframe3d_X1_input">
+                        <property name="width-request">60</property>
+                        <property name="height-request">34</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="width-chars">4</property>
+                        <property name="max-width-chars">15</property>
+                        <property name="overwrite-mode">True</property>
+                        <property name="input-purpose">number</property>
+                      </object>
+                      <packing>
+                        <property name="x">66</property>
+                        <property name="y">46</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="Wireframe3d_2_Input">
+                        <property name="width-request">60</property>
+                        <property name="height-request">34</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="width-chars">4</property>
+                        <property name="max-width-chars">15</property>
+                      </object>
+                      <packing>
+                        <property name="x">66</property>
+                        <property name="y">84</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow">
+                        <property name="width-request">180</property>
+                        <property name="height-request">195</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="shadow-type">in</property>
+                        <child>
+                          <object class="GtkTreeView" id="Wireframe3dTreelistPoints">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <child internal-child="selection">
+                              <object class="GtkTreeSelection"/>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="x">270</property>
+                        <property name="y">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="Wireframe3dNameInput">
+                        <property name="width-request">171</property>
+                        <property name="height-request">34</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="margin-bottom">20</property>
+                        <property name="width-chars">17</property>
+                      </object>
+                      <packing>
+                        <property name="x">50</property>
+                        <property name="y">223</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkColorButton" id="Wireframe3dColorInput">
+                        <property name="width-request">180</property>
+                        <property name="height-request">49</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="title" translatable="yes">Pick a color for the BEZIER CURVE</property>
+                        <property name="rgba">rgb(0,0,0)</property>
+                      </object>
+                      <packing>
+                        <property name="x">270</property>
+                        <property name="y">209</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="width-request">88</property>
+                        <property name="height-request">20</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="label" translatable="yes">Object Name</property>
+                        <property name="max-width-chars">11</property>
+                        <attributes>
+                          <attribute name="style" value="normal"/>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">93</property>
+                        <property name="y">203</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="AddWireframe3dRidge">
+                        <property name="label">gtk-add</property>
+                        <property name="width-request">76</property>
+                        <property name="height-request">34</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="double-buffered">False</property>
+                        <property name="use-stock">True</property>
+                        <property name="always-show-image">True</property>
+                        <signal name="clicked" handler="add_point_wireframe3d" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="x">96</property>
+                        <property name="y">160</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="New Ridge">
+                        <property name="width-request">99</property>
+                        <property name="height-request">25</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">New Ridge</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Source Code Pro Bold 10"/>
+                          <attribute name="scale" value="1.3999999999999999"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">87</property>
+                        <property name="y">10</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="width-request">40</property>
+                        <property name="height-request">20</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">x_end</property>
+                        <attributes>
+                          <attribute name="style" value="normal"/>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">142</property>
+                        <property name="y">51</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="Wireframe3d_X2_Input">
+                        <property name="width-request">63</property>
+                        <property name="height-request">34</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="width-chars">4</property>
+                      </object>
+                      <packing>
+                        <property name="x">185</property>
+                        <property name="y">46</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">y_end</property>
+                        <attributes>
+                          <attribute name="style" value="normal"/>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">142</property>
+                        <property name="y">89</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="Wireframe3d_Y2_Input">
+                        <property name="width-request">63</property>
+                        <property name="height-request">34</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="width-chars">4</property>
+                      </object>
+                      <packing>
+                        <property name="x">185</property>
+                        <property name="y">84</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">z_start</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">15</property>
+                        <property name="y">127</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="Wireframe3d_Z1_Input">
+                        <property name="width-request">60</property>
+                        <property name="height-request">34</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="width-chars">4</property>
+                      </object>
+                      <packing>
+                        <property name="x">66</property>
+                        <property name="y">122</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">z_end</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">142</property>
+                        <property name="y">127</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="Wireframe3d_Z2_Input">
+                        <property name="width-request">60</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="width-chars">4</property>
+                      </object>
+                      <packing>
+                        <property name="x">185</property>
+                        <property name="y">122</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="Wireframe3d">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Wireframe3d</property>
+                  </object>
+                  <packing>
+                    <property name="position">4</property>
+                    <property name="tab-fill">False</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">True</property>
